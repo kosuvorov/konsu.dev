@@ -13,7 +13,9 @@ const config: QuartzConfig = {
     enableSPA: true,
     enablePopovers: true,
     analytics: {
-      provider: "plausible",
+      provider: "umami",
+      host: "https://reactive-analytics.up.railway.app",
+      websiteId: "22e45a1a-843e-4210-86f2-3c9da9cec4f4",
     },
     locale: "en-US",
     baseUrl: "konsu.dev",
