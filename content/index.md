@@ -1,7 +1,7 @@
 ---
 publish: true
 title: Konstantin Suvorov
-Description: Personal website to share my work, thoughts and useful resources.
+description: Personal website, where I share my work, thoughts and useful resources.
 ---
 ![[IMG_1793-edited.jpg|152]]
 
