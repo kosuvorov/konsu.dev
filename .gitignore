@@ -11,7 +11,6 @@ private/
 replit.nix
 .claude/
 
-# Ignore everything in content except the home page
-# Published notes are synced from the Obsidian vault separately
-content/*
-!content/index.md
+# Stale vault files that ended up in content/ — not for publishing
+content/Apple Notes/
+content/The only base for now.base
