@@ -9,3 +9,9 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+.claude/
+
+# Ignore everything in content except the home page
+# Published notes are synced from the Obsidian vault separately
+content/*
+!content/index.md
