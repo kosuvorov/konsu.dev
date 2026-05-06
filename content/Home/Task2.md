@@ -9,5 +9,5 @@ aliases:
   - scrip
 publish: true
 ---
-Alright, let's see if this works
+And now an update :)
 
