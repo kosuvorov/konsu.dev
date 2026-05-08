@@ -1,3 +1,13 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// Links to private/unpublished notes render as plain text
+a.internal.broken {
+  color: inherit;
+  opacity: 1;
+  text-decoration: none;
+  cursor: text;
+  pointer-events: none;
+  &:hover {
+    opacity: 1;
+  }
+}
