@@ -1,5 +1,11 @@
 ---
 publish: true
+tags:
+  - youtube
+  - script
+  - video
+  - voiceprompter
+  - web
 ---
 #youtube #script #video #voiceprompter #web 
 ## Video title: The perfect voice-activated teleprompter app (100% free & open source)
