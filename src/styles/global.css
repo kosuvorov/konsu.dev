@@ -64,18 +64,26 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 
 body {
   font-variation-settings: 'ROND' 100;
-  background: var(--sky-fallback) var(--sky) center / cover no-repeat fixed;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 16.5px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  background-color: transparent;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--sky-fallback) var(--sky) center / cover no-repeat;
 }
 
 a {
@@ -592,9 +600,10 @@ h1, h2, h3 {
 .folder-icon {
   display: block;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.45));
-  border-radius: 26%;
+  border-radius: 22.5%;
   corner-shape: var(--corner);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .folder-grid {
@@ -704,10 +713,7 @@ h1, h2, h3 {
 /* ── Small screens ── */
 @media (max-width: 600px) {
   .menubar {
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    padding: 5px 12px;
+    padding: env(safe-area-inset-top, 0px) 12px 5px;
     gap: 8px;
   }
 
@@ -861,37 +867,42 @@ h1, h2, h3 {
 .video-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px;
-  margin-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px 16px;
+  margin-top: 16px;
 }
 
 .video-card {
-  corner-shape: var(--corner);
-  display: block;
-  background: var(--glass-strong);
-  border: 1px solid var(--glass-border);
-  border-radius: 22px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   color: var(--text);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  transition: transform 0.15s ease;
 }
 
 .video-card:hover {
   text-decoration: none;
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
 }
 
 .video-card img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  corner-shape: var(--corner);
+  border: 1px solid color-mix(in srgb, var(--glass-border) 40%, transparent);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
 .video-card .video-meta {
-  padding: 10px 14px 12px;
+  padding: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .video-card h3 {
