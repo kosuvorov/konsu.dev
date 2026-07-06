@@ -25,6 +25,8 @@ const dockLinks = [
   { href: 'https://voiceprompter.app', label: 'VoicePrompter', icon: '/voiceprompter-icon.png' },
 ];
 
+const ev = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
 const contactLinks = [
   { href: 'https://github.com/kosuvorov', label: 'GitHub', icon: '/dock-github.webp' },
   { href: 'https://linkedin.com/in/kosuvorov', label: 'LinkedIn', icon: '/dock-linkedin.webp' },
@@ -58,6 +60,8 @@ const contactLinks = [
     <meta property="og:site_name" content="Konstantin Suvorov" />
     <meta property="og:image" content="https://konsu.dev/clouds-day.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Umami Analytics -->
+    <script defer src="https://reactive-analytics.up.railway.app/script.js" data-website-id="22e45a1a-843e-4210-86f2-3c9da9cec4f4"></script>
     <script is:inline>
       const saved = localStorage.getItem('theme');
       const mode = saved === 'light' || saved === 'dark' ? saved : 'auto';
@@ -78,7 +82,7 @@ const contactLinks = [
 
     <header class="menubar" aria-label="Menu bar">
       <div class="menubar-left">
-        <a class="menubar-name" href="/">Konstantin Suvorov</a>
+        <a class="menubar-name" href="/" data-umami-event="menubar-name">Konstantin Suvorov</a>
       </div>
       <div class="menubar-right">
         <span class="menubar-battery" aria-label="Battery full" title="Fully charged, unlike me">
@@ -90,7 +94,7 @@ const contactLinks = [
               opacity="0.55"></path></svg
           >
         </span>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Theme: auto. Click to change" title="Theme: auto">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Theme: auto. Click to change" title="Theme: auto" data-umami-event="theme-toggle">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             ><circle cx="12" cy="12" r="4.5"></circle><path
               d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"></path></svg
@@ -112,14 +116,14 @@ const contactLinks = [
     <div class="desktop">
       <div class="desktop-icons-grid left">
         {dockLinks.map((link) => (
-          <a class="desktop-icon" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+          <a class="desktop-icon" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined} data-umami-event={`desktop-${ev(link.label)}`}>
             <img class="desktop-icon-img" src={link.icon} alt={link.label} width="52" height="52" />
           </a>
         ))}
       </div>
       <div class="desktop-icons-grid right">
         {contactLinks.map((link) => (
-          <a class="desktop-icon" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+          <a class="desktop-icon" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined} data-umami-event={`desktop-${ev(link.label)}`}>
             <img class="desktop-icon-img" src={link.icon} alt={link.label} width="52" height="52" />
           </a>
         ))}
@@ -128,9 +132,9 @@ const contactLinks = [
         <section class="window" id="window">
           <div class="window-titlebar" id="window-titlebar">
             <span class="traffic-lights">
-              <a class="light red" href="/" aria-label="Close window"></a>
-              <a class="light yellow" href="/" aria-label="Minimize (go to desktop)"></a>
-              <button class="light green" id="window-zoom" aria-label="Maximize window"></button>
+              <a class="light red" href="/" aria-label="Close window" data-umami-event="window-close"></a>
+              <a class="light yellow" href="/" aria-label="Minimize (go to desktop)" data-umami-event="window-minimize"></a>
+              <button class="light green" id="window-zoom" aria-label="Maximize window" data-umami-event="window-zoom"></button>
             </span>
             <span class="window-title">{windowTitle}</span>
             <span class="traffic-spacer" aria-hidden="true"></span>
@@ -143,10 +147,10 @@ const contactLinks = [
               <footer class="window-footer">
                 <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
                 <span class="links">
-                  <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
-                  <a href="https://www.instagram.com/kosuvorov/" rel="me">Instagram</a>
-                  <a href="mailto:hey@konsu.dev">Email</a>
-                  <a href="/rss.xml">RSS</a>
+                  <a href="https://www.youtube.com/@kosuvorov" rel="me" data-umami-event="footer-youtube">YouTube</a>
+                  <a href="https://www.instagram.com/kosuvorov/" rel="me" data-umami-event="footer-instagram">Instagram</a>
+                  <a href="mailto:hey@konsu.dev" data-umami-event="footer-email">Email</a>
+                  <a href="/rss.xml" data-umami-event="footer-rss">RSS</a>
                 </span>
               </footer>
             )}
@@ -166,7 +170,7 @@ const contactLinks = [
     <nav class="dock" aria-label="Main">
       <div class="dock-liquid" aria-hidden="true"></div>
       {dockApps.map((app) => (
-        <a href={app.href} class={`dock-item${app.active ? ' active' : ''}`} data-label={app.label}>
+        <a href={app.href} class={`dock-item${app.active ? ' active' : ''}`} data-label={app.label} data-umami-event={`dock-${ev(app.label)}`}>
           <img class={`dock-icon${app.pad ? ' scale-up' : ''}`} src={app.icon} alt="" width="52" height="52" />
         </a>
       ))}
@@ -282,6 +286,14 @@ const contactLinks = [
           handle.addEventListener('pointercancel', stopResize);
         });
       })();
+      // Track outbound links in content that don't carry an explicit event
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('a[href]');
+        if (!a || a.dataset.umamiEvent) return;
+        const href = a.getAttribute('href') || '';
+        if (!/^https?:/.test(href) || href.startsWith(location.origin)) return;
+        window.umami?.track('outbound-link', { url: href.slice(0, 120) });
+      });
     </script>
   </body>
 </html>

@@ -62,7 +62,7 @@ const fmt = (d: Date) =>
       <ul class="video-grid">
         {videos.map((v) => (
           <li>
-            <a class="video-card" href={`https://www.youtube.com/watch?v=${v.id}`}>
+            <a class="video-card" href={`https://www.youtube.com/watch?v=${v.id}`} data-umami-event="video-open" data-umami-event-title={v.title}>
               <img
                 src={`https://i.ytimg.com/vi/${v.id}/hq720.jpg`}
                 onerror={`this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/mqdefault.jpg'`}
