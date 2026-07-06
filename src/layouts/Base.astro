@@ -11,6 +11,21 @@ interface Props {
 const { title, description, windowTitle, type = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const hasWindow = Boolean(windowTitle);
+const path = Astro.url.pathname;
+
+const dockApps = [
+  { href: '/', label: 'Home', icon: '/dock-home.png', active: path === '/' },
+  { href: '/blog/', label: 'Blog', icon: '/dock-notes.webp', active: path.startsWith('/blog') },
+  { href: '/projects/', label: 'Projects', icon: '/dock-xcode.webp', active: path.startsWith('/projects') },
+  { href: '/videos/', label: 'YouTube', icon: '/dock-youtube.webp', active: path.startsWith('/videos') },
+];
+
+const dockLinks = [
+  { href: 'https://voiceprompter.app', label: 'VoicePrompter', icon: '/voiceprompter-icon.png' },
+  { href: 'https://github.com/kosuvorov', label: 'GitHub', icon: '/dock-github.webp' },
+  { href: 'https://www.instagram.com/kosuvorov/', label: 'Instagram', icon: '/dock-instagram.webp' },
+  { href: 'mailto:hey@konsu.dev', label: 'Email me', icon: '/dock-mail.webp' },
+];
 ---
 
 <!doctype html>
@@ -27,7 +42,7 @@ const hasWindow = Boolean(windowTitle);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600&family=Nunito:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Google+Sans+Flex:opsz,wght,ROND@8..144,300..800,100&display=swap"
       rel="stylesheet"
     />
     <meta property="og:type" content={type} />
@@ -54,7 +69,6 @@ const hasWindow = Boolean(windowTitle);
 
     <header class="menubar" aria-label="Menu bar">
       <div class="menubar-left">
-        <a class="menubar-logo" href="/" aria-label="Home">☁︎</a>
         <a class="menubar-name" href="/">Konstantin Suvorov</a>
       </div>
       <div class="menubar-right">
@@ -71,7 +85,7 @@ const hasWindow = Boolean(windowTitle);
 
     <div class="desktop">
       {hasWindow ? (
-        <section class="window glass" id="window">
+        <section class="window" id="window">
           <div class="window-titlebar" id="window-titlebar">
             <span class="traffic-lights">
               <a class="light red" href="/" aria-label="Close window"></a>
@@ -89,13 +103,16 @@ const hasWindow = Boolean(windowTitle);
               <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
               <span class="links">
                 <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
-                <a href="https://instagram.com/kosuvorov" rel="me">Instagram</a>
-                <a href="mailto:konstantin@voiceprompter.app">Email</a>
+                <a href="https://www.instagram.com/kosuvorov/" rel="me">Instagram</a>
+                <a href="mailto:hey@konsu.dev">Email</a>
                 <a href="/rss.xml">RSS</a>
               </span>
             </footer>
           </div>
-          <span class="window-resize" id="window-resize" aria-hidden="true"></span>
+          <span class="window-resize nw" data-dir="nw" aria-hidden="true"></span>
+          <span class="window-resize ne" data-dir="ne" aria-hidden="true"></span>
+          <span class="window-resize sw" data-dir="sw" aria-hidden="true"></span>
+          <span class="window-resize se" data-dir="se" aria-hidden="true"></span>
         </section>
       ) : (
         <main class="desktop-content">
@@ -106,29 +123,17 @@ const hasWindow = Boolean(windowTitle);
 
     <nav class="dock" aria-label="Main">
       <div class="dock-liquid" aria-hidden="true"></div>
-      <a href="/" class="dock-item" data-label="Home">
-        <span class="dock-icon tile-sky">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-        </span>
-      </a>
-      <a href="/blog/" class="dock-item" data-label="Blog">
-        <img class="dock-icon" src="/dock-notes.webp" alt="" width="46" height="46" />
-      </a>
-      <a href="/projects/" class="dock-item" data-label="Projects">
-        <span class="dock-icon tile-grape">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        </span>
-      </a>
-      <a href="/videos/" class="dock-item" data-label="YouTube">
-        <img class="dock-icon" src="/dock-youtube.webp" alt="" width="46" height="46" />
-      </a>
+      {dockApps.map((app) => (
+        <a href={app.href} class={`dock-item${app.active ? ' active' : ''}`} data-label={app.label}>
+          <img class="dock-icon" src={app.icon} alt="" width="52" height="52" />
+        </a>
+      ))}
       <span class="dock-divider" aria-hidden="true"></span>
-      <a href="https://voiceprompter.app" class="dock-item" data-label="VoicePrompter">
-        <img class="dock-icon" src="/voiceprompter-icon.png" alt="" width="46" height="46" />
-      </a>
-      <a href="https://github.com/kosuvorov" class="dock-item" data-label="GitHub" rel="me">
-        <img class="dock-icon" src="/dock-github.webp" alt="" width="46" height="46" />
-      </a>
+      {dockLinks.map((link) => (
+        <a href={link.href} class="dock-item" data-label={link.label} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+          <img class="dock-icon" src={link.icon} alt="" width="52" height="52" />
+        </a>
+      ))}
     </nav>
 
     <script is:inline>
@@ -146,19 +151,26 @@ const hasWindow = Boolean(windowTitle);
         setInterval(tick, 20000);
       })();
 
-      // Theme toggle (persists; overrides system preference)
+      // Theme toggle with crossfade (View Transitions where supported)
       (function () {
         const btn = document.getElementById('theme-toggle');
         const mq = window.matchMedia('(prefers-color-scheme: dark)');
         const current = () => document.documentElement.dataset.theme || (mq.matches ? 'dark' : 'light');
-        btn.addEventListener('click', () => {
+        const apply = () => {
           const next = current() === 'dark' ? 'light' : 'dark';
           document.documentElement.dataset.theme = next;
           localStorage.setItem('theme', next);
+        };
+        btn.addEventListener('click', () => {
+          if (document.startViewTransition) {
+            document.startViewTransition(apply);
+          } else {
+            apply();
+          }
         });
       })();
 
-      // Window: maximize, drag by titlebar, resize by corner (fine pointers)
+      // Window: maximize, drag by titlebar, resize from any corner (fine pointers)
       (function () {
         const win = document.getElementById('window');
         if (!win) return;
@@ -167,11 +179,13 @@ const hasWindow = Boolean(windowTitle);
           win.style.transform = '';
           win.style.width = '';
           win.style.height = '';
+          ox = 0; oy = 0;
         });
         if (!window.matchMedia('(pointer: fine)').matches) return;
 
+        let ox = 0, oy = 0;
         const bar = document.getElementById('window-titlebar');
-        let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
+        let sx = 0, sy = 0, dragging = false;
         bar.addEventListener('pointerdown', (e) => {
           if (e.target.closest('.light')) return;
           dragging = true;
@@ -189,27 +203,41 @@ const hasWindow = Boolean(windowTitle);
         bar.addEventListener('pointerup', stopDrag);
         bar.addEventListener('pointercancel', stopDrag);
 
-        const handle = document.getElementById('window-resize');
-        let rw = 0, rh = 0, rx = 0, ry = 0, resizing = false;
-        handle.addEventListener('pointerdown', (e) => {
-          resizing = true;
-          const rect = win.getBoundingClientRect();
-          rw = rect.width;
-          rh = rect.height;
-          rx = e.clientX;
-          ry = e.clientY;
-          win.classList.remove('maximized');
-          handle.setPointerCapture(e.pointerId);
-          e.preventDefault();
+        document.querySelectorAll('.window-resize').forEach((handle) => {
+          const dir = handle.dataset.dir;
+          let rw = 0, rh = 0, rx = 0, ry = 0, box = 0, boy = 0, resizing = false;
+          handle.addEventListener('pointerdown', (e) => {
+            resizing = true;
+            const rect = win.getBoundingClientRect();
+            rw = rect.width;
+            rh = rect.height;
+            rx = e.clientX;
+            ry = e.clientY;
+            box = ox;
+            boy = oy;
+            win.classList.remove('maximized');
+            handle.setPointerCapture(e.pointerId);
+            e.preventDefault();
+          });
+          handle.addEventListener('pointermove', (e) => {
+            if (!resizing) return;
+            const dx = e.clientX - rx;
+            const dy = e.clientY - ry;
+            const east = dir.includes('e');
+            const south = dir.includes('s');
+            const newW = Math.max(340, east ? rw + dx : rw - dx);
+            const newH = Math.max(260, south ? rh + dy : rh - dy);
+            win.style.width = newW + 'px';
+            win.style.height = newH + 'px';
+            // resizing from a left/top edge keeps the opposite edge anchored
+            ox = box + (east ? 0 : (rw - newW) / 2) - (east ? (rw - newW) / 2 : 0);
+            oy = boy + (south ? 0 : (rh - newH) / 2) - (south ? (rh - newH) / 2 : 0);
+            win.style.transform = `translate(${ox}px, ${oy}px)`;
+          });
+          const stopResize = () => { resizing = false; };
+          handle.addEventListener('pointerup', stopResize);
+          handle.addEventListener('pointercancel', stopResize);
         });
-        handle.addEventListener('pointermove', (e) => {
-          if (!resizing) return;
-          win.style.width = Math.max(340, rw + e.clientX - rx) + 'px';
-          win.style.height = Math.max(260, rh + e.clientY - ry) + 'px';
-        });
-        const stopResize = () => { resizing = false; };
-        handle.addEventListener('pointerup', stopResize);
-        handle.addEventListener('pointercancel', stopResize);
       })();
     </script>
   </body>

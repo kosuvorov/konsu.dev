@@ -11,9 +11,12 @@
   --window-shadow: 0 30px 90px rgba(10, 30, 60, 0.35);
   --spec-top: rgba(255, 255, 255, 0.6);
   --spec-bottom: rgba(255, 255, 255, 0.14);
-  --font-display: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', system-ui, sans-serif;
+  --font-display: 'Google Sans Flex', 'Arial Rounded MT Bold', system-ui, sans-serif;
   --font-script: 'Caveat', 'Bradley Hand', cursive;
-  --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --corner: superellipse(2.4); /* ~Figma 60% corner smoothing; tune the number to taste */
+  --window-bg: #f7f7f9;
+  --window-titlebar-bg: rgba(255, 255, 255, 0.6);
 }
 
 /* Dark theme via system preference... */
@@ -31,11 +34,15 @@
     --window-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
     --spec-top: rgba(255, 255, 255, 0.18);
     --spec-bottom: rgba(255, 255, 255, 0.05);
+    --window-bg: #1d1e22;
+    --window-titlebar-bg: rgba(255, 255, 255, 0.04);
   }
 }
 
 /* ...or the manual menu-bar toggle */
 :root[data-theme='dark'] {
+  --window-bg: #1d1e22;
+  --window-titlebar-bg: rgba(255, 255, 255, 0.04);
   --sky: url('/clouds-night.jpg');
   --sky-fallback: #0a1022;
   --glass: rgba(13, 20, 38, 0.42);
@@ -62,6 +69,7 @@ html, body {
 }
 
 body {
+  font-variation-settings: 'ROND' 100;
   background: var(--sky-fallback) var(--sky) center / cover no-repeat fixed;
   color: var(--text);
   font-family: var(--font-body);
@@ -88,7 +96,7 @@ h1, h2, h3 {
 
 .glass {
   position: relative;
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   background: var(--glass);
   -webkit-backdrop-filter: blur(9px) saturate(1.5);
   backdrop-filter: blur(9px) saturate(1.5);
@@ -206,6 +214,9 @@ h1, h2, h3 {
 }
 
 .window {
+  corner-shape: var(--corner);
+  background: var(--window-bg);
+  border: 1px solid var(--glass-border);
   width: min(880px, 100%);
   height: 100%;
   max-height: 100%;
@@ -224,6 +235,7 @@ h1, h2, h3 {
 }
 
 .window-titlebar {
+  background: var(--window-titlebar-bg);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -295,7 +307,7 @@ h1, h2, h3 {
   margin: 26px 0 22px;
   padding: 34px 28px 30px;
   text-align: center;
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
   border-radius: 30px;
@@ -342,7 +354,7 @@ h1, h2, h3 {
 }
 
 .card {
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   display: block;
   padding: 16px 18px;
   border-radius: 24px;
@@ -472,7 +484,7 @@ h1, h2, h3 {
 }
 
 .prose pre {
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   padding: 16px 18px;
   border-radius: 16px;
   overflow-x: auto;
@@ -521,7 +533,7 @@ h1, h2, h3 {
   left: 50%;
   transform: translateX(-50%);
   z-index: 200;
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -541,7 +553,7 @@ h1, h2, h3 {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   pointer-events: none;
   -webkit-backdrop-filter: url(#liquid-lens);
   backdrop-filter: url(#liquid-lens);
@@ -559,31 +571,25 @@ h1, h2, h3 {
 }
 
 .dock-icon {
-  corner-shape: squircle;
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 17px;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  display: block;
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 4px 10px rgba(10, 30, 60, 0.3));
 }
 
-.dock-icon svg {
-  width: 24px;
-  height: 24px;
+/* running-app indicator dot */
+.dock-item.active::before {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: var(--text);
+  opacity: 0.8;
 }
-
-img.dock-icon {
-  corner-shape: squircle;
-  border-radius: 17px;
-  box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25);
-}
-
-.tile-sky { background: linear-gradient(160deg, #4fb3f6, #1f7ad4); }
-.tile-sunset { background: linear-gradient(160deg, #ffb35c, #f4772e); }
-.tile-grape { background: linear-gradient(160deg, #b07cf7, #7c48d8); }
-.tile-ink { background: linear-gradient(160deg, #4a5568, #1a202c); }
 
 .dock-divider {
   width: 1px;
@@ -598,7 +604,7 @@ img.dock-icon {
   bottom: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%) scale(0.9);
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   background: var(--glass-strong);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -690,18 +696,21 @@ img.dock-icon {
 }
 
 
-/* ── Window resize handle ── */
+/* ── Window resize handles (all corners; grip mark only bottom-right) ── */
 .window-resize {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 26px;
-  height: 26px;
-  cursor: nwse-resize;
+  width: 22px;
+  height: 22px;
   touch-action: none;
+  z-index: 5;
 }
 
-.window-resize::after {
+.window-resize.nw { top: 0; left: 0; cursor: nwse-resize; }
+.window-resize.ne { top: 0; right: 0; cursor: nesw-resize; }
+.window-resize.sw { bottom: 0; left: 0; cursor: nesw-resize; }
+.window-resize.se { bottom: 0; right: 0; cursor: nwse-resize; }
+
+.window-resize.se::after {
   content: '';
   position: absolute;
   right: 9px;
@@ -725,7 +734,7 @@ img.dock-icon {
 }
 
 .sticky-note {
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   display: inline-block;
   background: var(--glass-strong);
   -webkit-backdrop-filter: blur(10px) saturate(1.5);
@@ -782,7 +791,7 @@ img.dock-icon {
 }
 
 .video-card {
-  corner-shape: squircle;
+  corner-shape: var(--corner);
   display: block;
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
@@ -834,4 +843,15 @@ img.dock-icon {
   .window-resize {
     display: none;
   }
+}
+
+
+/* Theme crossfade */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+}
+
+.video-card img {
+  background: #000;
 }
