@@ -11,9 +11,10 @@ const fmt = (d: Date) =>
 
 <Base
   title="Konstantin Suvorov - I make stuff for creators"
+  windowTitle="Konstantin Suvorov"
   description="Personal site of Konstantin Suvorov: indie developer building VoicePrompter and other small, useful tools for creators. Writing about building products solo."
 >
-  <section class="hero glass">
+  <section class="hero">
     <h1>I make stuff<span class="script">for creators :)</span></h1>
     <p>
       Hey, I'm Konstantin - an indie developer. My main thing is
@@ -23,7 +24,7 @@ const fmt = (d: Date) =>
     </p>
   </section>
 
-  <section class="panel glass" id="projects">
+  <section class="panel" id="projects">
     <h2 class="section-title">Projects</h2>
     <ul class="card-list">
       <li>
@@ -54,7 +55,7 @@ const fmt = (d: Date) =>
     </ul>
   </section>
 
-  <section class="panel glass">
+  <section class="panel">
     <h2 class="section-title">Writing</h2>
     <ul class="post-list">
       {posts.map((post) => (

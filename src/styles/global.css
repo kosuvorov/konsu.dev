@@ -1,5 +1,6 @@
 :root {
   --sky: url('/clouds-day.jpg');
+  --sky-fallback: #7ec6ef;
   --glass: rgba(255, 255, 255, 0.48);
   --glass-strong: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(255, 255, 255, 0.65);
@@ -7,22 +8,46 @@
   --text-light: #4e6079;
   --accent: #0b76d1;
   --shadow: 0 10px 40px rgba(23, 60, 102, 0.18);
+  --window-shadow: 0 30px 90px rgba(10, 30, 60, 0.35);
+  --spec-top: rgba(255, 255, 255, 0.6);
+  --spec-bottom: rgba(255, 255, 255, 0.14);
   --font-display: 'Fredoka', 'Baloo 2', 'Arial Rounded MT Bold', system-ui, sans-serif;
   --font-script: 'Caveat', 'Bradley Hand', cursive;
   --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Dark theme via system preference... */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --sky: url('/clouds-night.jpg');
+    --sky-fallback: #0a1022;
     --glass: rgba(13, 20, 38, 0.42);
     --glass-strong: rgba(13, 20, 38, 0.58);
-    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-border: rgba(255, 255, 255, 0.16);
     --text: #eef2fa;
     --text-light: #a8b4c8;
     --accent: #ffd166;
     --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+    --window-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    --spec-top: rgba(255, 255, 255, 0.18);
+    --spec-bottom: rgba(255, 255, 255, 0.05);
   }
+}
+
+/* ...or the manual menu-bar toggle */
+:root[data-theme='dark'] {
+  --sky: url('/clouds-night.jpg');
+  --sky-fallback: #0a1022;
+  --glass: rgba(13, 20, 38, 0.42);
+  --glass-strong: rgba(13, 20, 38, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --text: #eef2fa;
+  --text-light: #a8b4c8;
+  --accent: #ffd166;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+  --window-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  --spec-top: rgba(255, 255, 255, 0.18);
+  --spec-bottom: rgba(255, 255, 255, 0.05);
 }
 
 * {
@@ -31,37 +56,18 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  background: #7ec6ef var(--sky) center / cover no-repeat fixed;
+  background: var(--sky-fallback) var(--sky) center / cover no-repeat fixed;
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.7;
-  min-height: 100vh;
+  font-size: 16.5px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0a1022;
-  }
-}
-
-/* iOS doesn't do fixed backgrounds well */
-@supports (-webkit-touch-callout: none) {
-  body {
-    background-attachment: scroll;
-  }
-}
-
-.wrap {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 20px 140px;
 }
 
 a {
@@ -87,61 +93,223 @@ h1, h2, h3 {
   -webkit-backdrop-filter: blur(9px) saturate(1.5);
   backdrop-filter: blur(9px) saturate(1.5);
   border: 1px solid var(--glass-border);
-  border-radius: 24px;
+  border-radius: 28px;
   box-shadow:
     var(--shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+    inset 0 1px 0 var(--spec-top),
+    inset 0 -1px 0 var(--spec-bottom);
 }
 
-@media (prefers-color-scheme: dark) {
-  .glass {
-    box-shadow:
-      var(--shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-  }
-}
-
-/* ── Header ── */
-.site-header {
+/* ── Menu bar ── */
+.menubar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 24px 0 0;
-  padding: 12px 22px;
+  padding: 5px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.site-header .home {
-  font-family: var(--font-display);
-  font-size: 19px;
-  font-weight: 600;
+.menubar-left,
+.menubar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.menubar-logo {
+  font-size: 17px;
   color: var(--text);
+  line-height: 1;
 }
 
-.site-header .home:hover {
+.menubar-logo:hover {
   text-decoration: none;
   color: var(--accent);
 }
 
-.header-hint {
-  font-family: var(--font-script);
-  font-size: 21px;
-  color: var(--text-light);
-  transform: rotate(-2deg);
+.menubar-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
 }
 
-/* ── Hero ── */
-.hero {
-  margin: 56px 0 36px;
-  padding: 44px 40px 38px;
+.menubar-name:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.menubar-hint {
+  font-family: var(--font-script);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-light);
+  transform: rotate(-2deg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menubar-battery {
+  display: flex;
+  color: var(--text);
+}
+
+.theme-toggle {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  padding: 3px;
+  border-radius: 8px;
+}
+
+.theme-toggle:hover {
+  background: var(--glass-strong);
+}
+
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* moon shown in light mode (click = go dark), sun in dark mode */
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+
+:root[data-theme='dark'] .icon-sun { display: block; }
+:root[data-theme='dark'] .icon-moon { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .icon-sun { display: block; }
+  :root:not([data-theme='light']) .icon-moon { display: none; }
+}
+
+.menubar-clock {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+/* ── Desktop & window ── */
+.desktop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 68px 18px 104px;
+}
+
+.window {
+  width: min(880px, 100%);
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 26px;
+  box-shadow:
+    var(--window-shadow),
+    inset 0 1px 0 var(--spec-top),
+    inset 0 -1px 0 var(--spec-bottom);
+  overflow: hidden;
+}
+
+.window.maximized {
+  width: 100%;
+}
+
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--glass-border);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  flex-shrink: 0;
+}
+
+.window-titlebar:active {
+  cursor: grabbing;
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.traffic-spacer {
+  width: 52px;
+  flex-shrink: 0;
+}
+
+.light {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15);
+}
+
+.light.red { background: #ff5f57; }
+.light.yellow { background: #febc2e; cursor: default; }
+.light.green { background: #28c840; }
+
+.light:hover {
+  filter: brightness(0.92);
+}
+
+.window-title {
+  flex: 1;
   text-align: center;
-  position: relative;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.window-content {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 34px 26px;
+}
+
+/* ── Content inside the window ── */
+.hero {
+  margin: 26px 0 22px;
+  padding: 34px 28px 30px;
+  text-align: center;
+  corner-shape: squircle;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
 }
 
 .hero h1 {
-  font-size: 52px;
+  font-size: 44px;
   letter-spacing: 0.01em;
   text-transform: uppercase;
 }
@@ -149,7 +317,7 @@ h1, h2, h3 {
 .hero .script {
   display: block;
   font-family: var(--font-script);
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 600;
   text-transform: none;
   color: var(--accent);
@@ -161,19 +329,17 @@ h1, h2, h3 {
   color: var(--text-light);
   font-weight: 600;
   max-width: 46ch;
-  margin: 18px auto 0;
+  margin: 14px auto 0;
 }
 
-/* ── Sections ── */
 .panel {
-  margin: 22px 0;
-  padding: 28px 32px;
+  margin: 18px 0;
 }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: 22px;
-  margin-bottom: 16px;
+  font-size: 21px;
+  margin-bottom: 12px;
 }
 
 .card-list {
@@ -186,7 +352,7 @@ h1, h2, h3 {
   corner-shape: squircle;
   display: block;
   padding: 16px 18px;
-  border-radius: 16px;
+  border-radius: 20px;
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
   color: var(--text);
@@ -248,17 +414,16 @@ h1, h2, h3 {
 
 /* ── Article ── */
 .article-panel {
-  margin: 36px 0;
-  padding: 40px 42px;
+  margin: 10px 0;
 }
 
 .article-header {
-  margin-bottom: 8px;
+  margin: 22px 0 8px;
 }
 
 .article-header h1 {
-  font-size: 34px;
-  margin-bottom: 8px;
+  font-size: 31px;
+  margin-bottom: 6px;
 }
 
 .article-header time {
@@ -268,21 +433,21 @@ h1, h2, h3 {
 }
 
 .prose {
-  padding-top: 16px;
+  padding-top: 10px;
 }
 
 .prose h2 {
-  font-size: 24px;
-  margin: 36px 0 12px;
+  font-size: 23px;
+  margin: 32px 0 12px;
 }
 
 .prose h3 {
   font-size: 19px;
-  margin: 28px 0 10px;
+  margin: 26px 0 10px;
 }
 
 .prose p, .prose ul, .prose ol {
-  margin-bottom: 17px;
+  margin-bottom: 16px;
 }
 
 .prose ul, .prose ol {
@@ -295,7 +460,7 @@ h1, h2, h3 {
 
 .prose img {
   max-width: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
 .prose blockquote {
@@ -308,16 +473,17 @@ h1, h2, h3 {
 .prose code {
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
-  border-radius: 6px;
+  border-radius: 7px;
   padding: 1px 6px;
   font-size: 0.87em;
 }
 
 .prose pre {
+  corner-shape: squircle;
   padding: 16px 18px;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow-x: auto;
-  margin-bottom: 17px;
+  margin-bottom: 16px;
   border: 1px solid var(--glass-border);
 }
 
@@ -327,98 +493,62 @@ h1, h2, h3 {
   padding: 0;
 }
 
-/* ── Footer ── */
-.site-footer {
-  margin-top: 30px;
-  padding: 16px 22px;
+/* ── Window footer ── */
+.window-footer {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--glass-border);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 14px;
   flex-wrap: wrap;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--text-light);
 }
 
-.site-footer .links {
+.window-footer .links {
   display: flex;
-  gap: 16px;
+  gap: 14px;
 }
 
-.site-footer a {
+.window-footer a {
   color: var(--text-light);
 }
 
-.site-footer a:hover {
+.window-footer a:hover {
   color: var(--accent);
 }
-
-@media (max-width: 560px) {
-  .hero {
-    margin-top: 32px;
-    padding: 34px 22px 30px;
-  }
-
-  .hero h1 {
-    font-size: 38px;
-  }
-
-  .hero .script {
-    font-size: 27px;
-  }
-
-  .panel {
-    padding: 24px 22px;
-  }
-
-  .article-panel {
-    padding: 30px 24px;
-  }
-
-  .article-header h1 {
-    font-size: 27px;
-  }
-}
-
 
 /* ── Dock ── */
 .dock {
   position: fixed;
-  corner-shape: squircle;
-  bottom: 16px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 200;
+  corner-shape: squircle;
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  border-radius: 26px;
+  border-radius: 30px;
   background: var(--glass);
   -webkit-backdrop-filter: blur(10px) saturate(1.6);
   backdrop-filter: blur(10px) saturate(1.6);
   border: 1px solid var(--glass-border);
   box-shadow:
     0 18px 50px rgba(10, 30, 60, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+    inset 0 1px 0 var(--spec-top),
+    inset 0 -1px 0 var(--spec-bottom);
 }
 
-@media (prefers-color-scheme: dark) {
-  .dock {
-    box-shadow:
-      0 18px 50px rgba(0, 0, 0, 0.55),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-  }
-}
-
-/* Refraction layer: Chromium renders the SVG displacement; others ignore it */
 .dock-liquid {
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  corner-shape: squircle;
   pointer-events: none;
   -webkit-backdrop-filter: url(#liquid-lens);
   backdrop-filter: url(#liquid-lens);
@@ -441,7 +571,7 @@ h1, h2, h3 {
   place-items: center;
   width: 46px;
   height: 46px;
-  border-radius: 13px;
+  border-radius: 15px;
   color: #fff;
   box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
@@ -453,25 +583,14 @@ h1, h2, h3 {
 
 img.dock-icon {
   corner-shape: squircle;
-  border-radius: 13px;
+  border-radius: 15px;
   box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25);
 }
 
-.tile-sky {
-  background: linear-gradient(160deg, #4fb3f6, #1f7ad4);
-}
-
-.tile-sunset {
-  background: linear-gradient(160deg, #ffb35c, #f4772e);
-}
-
-.tile-grape {
-  background: linear-gradient(160deg, #b07cf7, #7c48d8);
-}
-
-.tile-ink {
-  background: linear-gradient(160deg, #4a5568, #1a202c);
-}
+.tile-sky { background: linear-gradient(160deg, #4fb3f6, #1f7ad4); }
+.tile-sunset { background: linear-gradient(160deg, #ffb35c, #f4772e); }
+.tile-grape { background: linear-gradient(160deg, #b07cf7, #7c48d8); }
+.tile-ink { background: linear-gradient(160deg, #4a5568, #1a202c); }
 
 .dock-divider {
   width: 1px;
@@ -480,13 +599,13 @@ img.dock-icon {
   margin: 0 2px;
 }
 
-/* Tooltip labels */
 .dock-item::after {
   content: attr(data-label);
   position: absolute;
   bottom: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%) scale(0.9);
+  corner-shape: squircle;
   background: var(--glass-strong);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -507,33 +626,72 @@ img.dock-icon {
   transform: translateX(-50%) scale(1);
 }
 
-@media (max-width: 560px) {
+/* ── Small screens ── */
+@media (max-width: 600px) {
+  .menubar {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    padding: 5px 12px;
+    gap: 8px;
+  }
+
+  .menubar-hint,
+  .menubar-battery {
+    display: none;
+  }
+
+  .desktop {
+    padding: 60px 8px 88px;
+  }
+
+  .window {
+    border-radius: 22px;
+  }
+
+  .window-content {
+    padding: 4px 18px 20px;
+  }
+
+  .hero {
+    padding: 26px 18px 24px;
+  }
+
+  .hero h1 {
+    font-size: 33px;
+  }
+
+  .hero .script {
+    font-size: 25px;
+  }
+
+  .article-header h1 {
+    font-size: 25px;
+  }
+
   .dock {
     gap: 7px;
     padding: 8px 11px;
-    bottom: 12px;
+    bottom: 10px;
   }
 
   .dock-icon,
   img.dock-icon {
     width: 40px;
     height: 40px;
-    border-radius: 11px;
+    border-radius: 13px;
   }
 
   .dock-icon svg {
     width: 21px;
     height: 21px;
   }
-
-  .header-hint {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dock-item,
-  .dock-item::after {
+  .dock-item::after,
+  .card {
     transition: none;
   }
 }
