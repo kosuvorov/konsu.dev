@@ -1,11 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Konstantin Suvorov',
+  url: 'https://konsu.dev/',
+  jobTitle: 'Indie developer',
+  description:
+    'Indie developer building VoicePrompter, a voice-controlled teleprompter for Mac, iPhone, and iPad, and 1moment.io, a QR service platform for restaurants.',
+  sameAs: [
+    'https://github.com/kosuvorov',
+    'https://www.youtube.com/@kosuvorov',
+    'https://www.instagram.com/kosuvorov/',
+    'https://linkedin.com/in/kosuvorov',
+    'https://t.me/kosuvorov',
+    'https://voiceprompter.app',
+  ],
+};
 ---
 
 <Base
   title="Konstantin Suvorov - I make stuff for creators"
   description="Personal site of Konstantin Suvorov: indie developer building VoicePrompter and other small, useful tools for creators. Writing about building products solo."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} slot="head" />
+  <h1 class="sr-only">Konstantin Suvorov - indie developer making tools for creators</h1>
+  <p class="sr-only">
+    I build VoicePrompter, a voice-controlled teleprompter for Mac, iPhone, and iPad,
+    and 1moment.io. This site is my desktop: open the dock to browse my blog,
+    projects, and videos.
+  </p>
   {/* <div class="sticky-note">
     <h1>I make stuff<span class="script">for creators :)</span></h1>
   </div> */}
