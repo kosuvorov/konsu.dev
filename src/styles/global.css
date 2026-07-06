@@ -581,7 +581,7 @@ h1, h2, h3 {
 }
 
 .dock-folder {
-  display: none;
+  display: block;
   appearance: none;
   border: 0;
   background: transparent;
@@ -590,17 +590,28 @@ h1, h2, h3 {
 }
 
 .folder-icon {
-  display: grid;
-  place-items: center;
-  color: #58a6e8;
+  display: block;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.45));
   border-radius: 14px;
   corner-shape: var(--corner);
+  box-sizing: border-box;
 }
 
-.folder-icon svg {
-  width: 30px;
-  height: 30px;
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.folder-grid img {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 .dock-tray {

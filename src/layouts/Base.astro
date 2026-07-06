@@ -24,8 +24,13 @@ const dockApps = [
 const dockLinks = [
   { href: 'https://voiceprompter.app', label: 'VoicePrompter', icon: '/voiceprompter-icon.png' },
   { href: 'https://github.com/kosuvorov', label: 'GitHub', icon: '/dock-github.webp' },
+];
+
+const contactLinks = [
+  { href: 'https://linkedin.com/in/kosuvorov', label: 'LinkedIn', icon: '/dock-linkedin.webp' },
   { href: 'https://www.instagram.com/kosuvorov/', label: 'Instagram', icon: '/dock-instagram.webp' },
-  { href: 'mailto:hey@konsu.dev', label: 'Email me', icon: '/dock-mail.webp' },
+  { href: 'mailto:hey@konsu.dev', label: 'Email', icon: '/dock-mail.webp' },
+  { href: 'https://t.me/kosuvorov', label: 'Telegram', icon: '/dock-telegram.webp' },
 ];
 ---
 
@@ -140,13 +145,17 @@ const dockLinks = [
           <img class="dock-icon" src={link.icon} alt="" width="52" height="52" />
         </a>
       ))}
-      <button class="dock-item dock-folder" id="dock-folder" data-label="More" aria-label="More links" aria-expanded="false">
+      <button class="dock-item dock-folder" id="dock-folder" data-label="Contact" aria-label="Contact links" aria-expanded="false">
         <span class="dock-icon folder-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.5h7A2.5 2.5 0 0 1 21 9v8.5a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-11Z"/></svg>
+          <span class="folder-grid">
+            {contactLinks.map((link) => (
+              <img src={link.icon} alt="" width="16" height="16" />
+            ))}
+          </span>
         </span>
       </button>
       <div class="dock-tray" id="dock-tray">
-        {dockLinks.map((link) => (
+        {contactLinks.map((link) => (
           <a href={link.href} class="tray-item" rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
             <img src={link.icon} alt="" width="44" height="44" />
             <span>{link.label}</span>
