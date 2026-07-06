@@ -157,12 +157,15 @@ const contactLinks = [
         </span>
       </button>
       <div class="dock-tray dock-links-tray" id="dock-links-tray">
-        {dockLinks.map((link) => (
-          <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
-            <img src={link.icon} alt="" width="32" height="32" />
-            {link.label}
-          </a>
-        ))}
+        <div class="dock-tray-content">
+          {dockLinks.map((link) => (
+            <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+              <img src={link.icon} alt="" width="32" height="32" />
+              {link.label}
+            </a>
+          ))}
+          <button class="tray-close">Close</button>
+        </div>
       </div>
       <button class="dock-item dock-folder" id="dock-folder" data-label="Contact" aria-label="Contact links" aria-expanded="false">
         <span class="dock-icon folder-icon">
@@ -174,12 +177,15 @@ const contactLinks = [
         </span>
       </button>
       <div class="dock-tray" id="dock-tray">
-        {contactLinks.map((link) => (
-          <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
-            <img src={link.icon} alt="" width="32" height="32" />
-            {link.label}
-          </a>
-        ))}
+        <div class="dock-tray-content">
+          {contactLinks.map((link) => (
+            <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+              <img src={link.icon} alt="" width="32" height="32" />
+              {link.label}
+            </a>
+          ))}
+          <button class="tray-close">Close</button>
+        </div>
       </div>
     </nav>
 
@@ -232,11 +238,11 @@ const contactLinks = [
           if (!btn || !tray) return;
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const open = tray.classList.toggle('open');
-            btn.setAttribute('aria-expanded', open);
+            tray.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
           });
-          document.addEventListener('click', (e) => {
-            if (!tray.contains(e.target)) {
+          tray.addEventListener('click', (e) => {
+            if (e.target === tray || e.target.closest('.tray-close')) {
               tray.classList.remove('open');
               btn.setAttribute('aria-expanded', 'false');
             }

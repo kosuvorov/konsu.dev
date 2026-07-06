@@ -25,12 +25,15 @@ try {
   const checks = await Promise.all(
     all.map(async (v) => {
       try {
-        // SOCS=CAI skips the EU consent wall so the redirect signal works from any region
-        const r = await fetch(`https://www.youtube.com/shorts/${v.id}`, {
-          redirect: 'manual',
-          headers: { cookie: 'SOCS=CAI' },
-        });
-        return r.status !== 200; // redirect to /watch -> long-form; 200 -> Short
+        // SOCS=CAI skips the EU consent wall
+        const [shortsRes, watchRes] = await Promise.all([
+          fetch(`https://www.youtube.com/shorts/${v.id}`, { redirect: 'manual', headers: { cookie: 'SOCS=CAI' } }),
+          fetch(`https://www.youtube.com/watch?v=${v.id}`, { headers: { cookie: 'SOCS=CAI' } })
+        ]);
+        const isShort = shortsRes.status === 200;
+        const watchHtml = await watchRes.text();
+        const isLive = watchHtml.includes('itemprop="isLiveBroadcast" content="True"');
+        return !isShort && !isLive;
       } catch {
         return true; // if the check fails, keep the video
       }
