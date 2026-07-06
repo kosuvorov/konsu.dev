@@ -147,6 +147,23 @@ const contactLinks = [
           <img class="dock-icon" src={link.icon} alt="" width="52" height="52" />
         </a>
       ))}
+      <button class="dock-item dock-folder dock-links-folder" id="dock-links-folder" data-label="Links" aria-label="External links" aria-expanded="false">
+        <span class="dock-icon folder-icon">
+          <span class="folder-grid">
+            {dockLinks.map((link) => (
+              <img src={link.icon} alt="" width="16" height="16" />
+            ))}
+          </span>
+        </span>
+      </button>
+      <div class="dock-tray dock-links-tray" id="dock-links-tray">
+        {dockLinks.map((link) => (
+          <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+            <img src={link.icon} alt="" width="32" height="32" />
+            {link.label}
+          </a>
+        ))}
+      </div>
       <button class="dock-item dock-folder" id="dock-folder" data-label="Contact" aria-label="Contact links" aria-expanded="false">
         <span class="dock-icon folder-icon">
           <span class="folder-grid">
@@ -158,9 +175,9 @@ const contactLinks = [
       </button>
       <div class="dock-tray" id="dock-tray">
         {contactLinks.map((link) => (
-          <a href={link.href} class="tray-item" rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
-            <img src={link.icon} alt="" width="44" height="44" />
-            <span>{link.label}</span>
+          <a class="tray-item" href={link.href} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+            <img src={link.icon} alt="" width="32" height="32" />
+            {link.label}
           </a>
         ))}
       </div>
