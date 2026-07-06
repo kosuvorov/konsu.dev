@@ -1,69 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const fmt = (d: Date) =>
-  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
 <Base
   title="Konstantin Suvorov - I make stuff for creators"
-  windowTitle="Konstantin Suvorov"
   description="Personal site of Konstantin Suvorov: indie developer building VoicePrompter and other small, useful tools for creators. Writing about building products solo."
 >
-  <section class="hero">
+  <div class="sticky-note">
     <h1>I make stuff<span class="script">for creators :)</span></h1>
     <p>
       Hey, I'm Konstantin - an indie developer. My main thing is
       <a href="https://voiceprompter.app">VoicePrompter</a>, a teleprompter that
-      scrolls as you speak, used by creators in 125+ countries. Here I write about
-      what I build and what I learn building it.
+      scrolls as you speak, used by creators in 125+ countries.
     </p>
-  </section>
-
-  <section class="panel" id="projects">
-    <h2 class="section-title">Projects</h2>
-    <ul class="card-list">
-      <li>
-        <a class="card" href="https://voiceprompter.app">
-          <h3>VoicePrompter</h3>
-          <p>
-            A voice-controlled teleprompter for Mac, iPhone, iPad, and the web. Tracks
-            your speech against the whole script and stays invisible during screen
-            sharing.
-          </p>
-        </a>
-      </li>
-      <li>
-        <a class="card" href="https://kosuvorov.github.io/linkedin-connections-graph/">
-          <h3>LinkedIn Connections Graph</h3>
-          <p>
-            Turn your LinkedIn export into an Obsidian-style force graph - grouped by
-            company, role, or year. Runs 100% in your browser.
-          </p>
-        </a>
-      </li>
-      <li>
-        <a class="card" href="https://github.com/kosuvorov">
-          <h3>More on GitHub</h3>
-          <p>Experiments, utilities, and whatever I'm currently poking at.</p>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <section class="panel">
-    <h2 class="section-title">Writing</h2>
-    <ul class="post-list">
-      {posts.map((post) => (
-        <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
-        </li>
-      ))}
-    </ul>
-  </section>
+  </div>
+  <p class="desktop-hint">↓ everything lives in the dock</p>
 </Base>

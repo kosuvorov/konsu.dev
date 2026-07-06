@@ -93,27 +93,31 @@ h1, h2, h3 {
   -webkit-backdrop-filter: blur(9px) saturate(1.5);
   backdrop-filter: blur(9px) saturate(1.5);
   border: 1px solid var(--glass-border);
-  border-radius: 28px;
+  border-radius: 32px;
   box-shadow:
     var(--shadow),
     inset 0 1px 0 var(--spec-top),
     inset 0 -1px 0 var(--spec-bottom);
 }
 
-/* ── Menu bar ── */
+/* ── Menu bar (macOS style: flush to the top, subtle blur) ── */
 .menubar {
   position: fixed;
-  top: 10px;
-  left: 10px;
-  right: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 5px 16px;
-  border-radius: 16px;
-  font-size: 14px;
+  height: 32px;
+  padding: 0 14px;
+  background: color-mix(in srgb, var(--glass) 60%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 50%, transparent);
+  font-size: 13.5px;
   font-weight: 700;
 }
 
@@ -126,7 +130,7 @@ h1, h2, h3 {
 }
 
 .menubar-logo {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--text);
   line-height: 1;
 }
@@ -148,17 +152,6 @@ h1, h2, h3 {
   color: var(--accent);
 }
 
-.menubar-hint {
-  font-family: var(--font-script);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-light);
-  transform: rotate(-2deg);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .menubar-battery {
   display: flex;
   color: var(--text);
@@ -172,7 +165,7 @@ h1, h2, h3 {
   cursor: pointer;
   display: flex;
   padding: 3px;
-  border-radius: 8px;
+  border-radius: 7px;
 }
 
 .theme-toggle:hover {
@@ -180,8 +173,8 @@ h1, h2, h3 {
 }
 
 .theme-toggle svg {
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
 }
 
 /* moon shown in light mode (click = go dark), sun in dark mode */
@@ -209,7 +202,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 68px 18px 104px;
+  padding: 52px 18px 104px;
 }
 
 .window {
@@ -218,7 +211,7 @@ h1, h2, h3 {
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 26px;
+  border-radius: 34px;
   box-shadow:
     var(--window-shadow),
     inset 0 1px 0 var(--spec-top),
@@ -305,7 +298,7 @@ h1, h2, h3 {
   corner-shape: squircle;
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
-  border-radius: 24px;
+  border-radius: 30px;
 }
 
 .hero h1 {
@@ -352,7 +345,7 @@ h1, h2, h3 {
   corner-shape: squircle;
   display: block;
   padding: 16px 18px;
-  border-radius: 20px;
+  border-radius: 24px;
   background: var(--glass-strong);
   border: 1px solid var(--glass-border);
   color: var(--text);
@@ -533,7 +526,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  border-radius: 30px;
+  border-radius: 34px;
   background: var(--glass);
   -webkit-backdrop-filter: blur(10px) saturate(1.6);
   backdrop-filter: blur(10px) saturate(1.6);
@@ -571,7 +564,7 @@ h1, h2, h3 {
   place-items: center;
   width: 46px;
   height: 46px;
-  border-radius: 15px;
+  border-radius: 17px;
   color: #fff;
   box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
@@ -583,7 +576,7 @@ h1, h2, h3 {
 
 img.dock-icon {
   corner-shape: squircle;
-  border-radius: 15px;
+  border-radius: 17px;
   box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25);
 }
 
@@ -693,5 +686,152 @@ img.dock-icon {
   .dock-item::after,
   .card {
     transition: none;
+  }
+}
+
+
+/* ── Window resize handle ── */
+.window-resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 26px;
+  height: 26px;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.window-resize::after {
+  content: '';
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--text-light);
+  border-bottom: 2px solid var(--text-light);
+  border-bottom-right-radius: 4px;
+  opacity: 0.6;
+}
+
+.window {
+  position: relative;
+}
+
+/* ── Desktop home (no window open) ── */
+.desktop-content {
+  width: min(560px, 100%);
+  text-align: center;
+}
+
+.sticky-note {
+  corner-shape: squircle;
+  display: inline-block;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+  backdrop-filter: blur(10px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  padding: 38px 40px 34px;
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 var(--spec-top);
+  transform: rotate(-1.2deg);
+}
+
+.sticky-note h1 {
+  font-size: 42px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.sticky-note .script {
+  display: block;
+  font-family: var(--font-script);
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: none;
+  color: var(--accent);
+  margin-top: -6px;
+  transform: rotate(-2deg);
+}
+
+.sticky-note p {
+  color: var(--text-light);
+  font-weight: 600;
+  max-width: 40ch;
+  margin: 14px auto 0;
+}
+
+.desktop-hint {
+  margin-top: 26px;
+  font-family: var(--font-script);
+  font-size: 22px;
+  color: var(--text);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0.85;
+}
+
+/* ── Videos grid ── */
+.video-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.video-card {
+  corner-shape: squircle;
+  display: block;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 22px;
+  overflow: hidden;
+  color: var(--text);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.video-card:hover {
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.video-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.video-card .video-meta {
+  padding: 10px 14px 12px;
+}
+
+.video-card h3 {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.video-card time {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+@media (max-width: 600px) {
+  .sticky-note h1 {
+    font-size: 32px;
+  }
+
+  .sticky-note {
+    padding: 28px 24px 26px;
+  }
+
+  .window-resize {
+    display: none;
   }
 }

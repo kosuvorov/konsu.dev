@@ -8,8 +8,9 @@ interface Props {
   type?: string;
 }
 
-const { title, description, windowTitle = 'konsu.dev', type = 'website' } = Astro.props;
+const { title, description, windowTitle, type = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const hasWindow = Boolean(windowTitle);
 ---
 
 <!doctype html>
@@ -51,11 +52,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       </filter>
     </svg>
 
-    <header class="menubar glass" aria-label="Menu bar">
+    <header class="menubar" aria-label="Menu bar">
       <div class="menubar-left">
         <a class="menubar-logo" href="/" aria-label="Home">☁︎</a>
         <a class="menubar-name" href="/">Konstantin Suvorov</a>
-        <span class="menubar-hint script-hint">makes stuff for creators :)</span>
       </div>
       <div class="menubar-right">
         <span class="menubar-battery" aria-label="Battery full" title="Fully charged, unlike me">
@@ -70,31 +70,38 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </header>
 
     <div class="desktop">
-      <section class="window glass" id="window">
-        <div class="window-titlebar" id="window-titlebar">
-          <span class="traffic-lights">
-            <a class="light red" href="/" aria-label="Close (go home)"></a>
-            <span class="light yellow" aria-hidden="true"></span>
-            <button class="light green" id="window-zoom" aria-label="Maximize window"></button>
-          </span>
-          <span class="window-title">{windowTitle}</span>
-          <span class="traffic-spacer" aria-hidden="true"></span>
-        </div>
-        <div class="window-content">
-          <main>
-            <slot />
-          </main>
-          <footer class="window-footer">
-            <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
-            <span class="links">
-              <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
-              <a href="https://instagram.com/kosuvorov" rel="me">Instagram</a>
-              <a href="mailto:konstantin@voiceprompter.app">Email</a>
-              <a href="/rss.xml">RSS</a>
+      {hasWindow ? (
+        <section class="window glass" id="window">
+          <div class="window-titlebar" id="window-titlebar">
+            <span class="traffic-lights">
+              <a class="light red" href="/" aria-label="Close window"></a>
+              <a class="light yellow" href="/" aria-label="Minimize (go to desktop)"></a>
+              <button class="light green" id="window-zoom" aria-label="Maximize window"></button>
             </span>
-          </footer>
-        </div>
-      </section>
+            <span class="window-title">{windowTitle}</span>
+            <span class="traffic-spacer" aria-hidden="true"></span>
+          </div>
+          <div class="window-content">
+            <main>
+              <slot />
+            </main>
+            <footer class="window-footer">
+              <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
+              <span class="links">
+                <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
+                <a href="https://instagram.com/kosuvorov" rel="me">Instagram</a>
+                <a href="mailto:konstantin@voiceprompter.app">Email</a>
+                <a href="/rss.xml">RSS</a>
+              </span>
+            </footer>
+          </div>
+          <span class="window-resize" id="window-resize" aria-hidden="true"></span>
+        </section>
+      ) : (
+        <main class="desktop-content">
+          <slot />
+        </main>
+      )}
     </div>
 
     <nav class="dock" aria-label="Main">
@@ -105,23 +112,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         </span>
       </a>
       <a href="/blog/" class="dock-item" data-label="Blog">
-        <span class="dock-icon tile-sunset">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        </span>
+        <img class="dock-icon" src="/dock-notes.webp" alt="" width="46" height="46" />
       </a>
-      <a href="/#projects" class="dock-item" data-label="Projects">
+      <a href="/projects/" class="dock-item" data-label="Projects">
         <span class="dock-icon tile-grape">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         </span>
       </a>
+      <a href="/videos/" class="dock-item" data-label="YouTube">
+        <img class="dock-icon" src="/dock-youtube.webp" alt="" width="46" height="46" />
+      </a>
       <span class="dock-divider" aria-hidden="true"></span>
       <a href="https://voiceprompter.app" class="dock-item" data-label="VoicePrompter">
-        <img class="dock-icon" src="/voiceprompter-icon.png" alt="VoicePrompter" width="46" height="46" />
+        <img class="dock-icon" src="/voiceprompter-icon.png" alt="" width="46" height="46" />
       </a>
       <a href="https://github.com/kosuvorov" class="dock-item" data-label="GitHub" rel="me">
-        <span class="dock-icon tile-ink">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.05.78 2.13v3.16c0 .31.2.67.8.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-        </span>
+        <img class="dock-icon" src="/dock-github.webp" alt="" width="46" height="46" />
       </a>
     </nav>
 
@@ -152,15 +158,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         });
       })();
 
-      // Window: green light maximizes, titlebar drags (desktop pointers only)
+      // Window: maximize, drag by titlebar, resize by corner (fine pointers)
       (function () {
         const win = document.getElementById('window');
-        const bar = document.getElementById('window-titlebar');
+        if (!win) return;
         document.getElementById('window-zoom').addEventListener('click', () => {
           win.classList.toggle('maximized');
           win.style.transform = '';
+          win.style.width = '';
+          win.style.height = '';
         });
         if (!window.matchMedia('(pointer: fine)').matches) return;
+
+        const bar = document.getElementById('window-titlebar');
         let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
         bar.addEventListener('pointerdown', (e) => {
           if (e.target.closest('.light')) return;
@@ -175,9 +185,31 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           oy = e.clientY - sy;
           win.style.transform = `translate(${ox}px, ${oy}px)`;
         });
-        const stop = () => { dragging = false; };
-        bar.addEventListener('pointerup', stop);
-        bar.addEventListener('pointercancel', stop);
+        const stopDrag = () => { dragging = false; };
+        bar.addEventListener('pointerup', stopDrag);
+        bar.addEventListener('pointercancel', stopDrag);
+
+        const handle = document.getElementById('window-resize');
+        let rw = 0, rh = 0, rx = 0, ry = 0, resizing = false;
+        handle.addEventListener('pointerdown', (e) => {
+          resizing = true;
+          const rect = win.getBoundingClientRect();
+          rw = rect.width;
+          rh = rect.height;
+          rx = e.clientX;
+          ry = e.clientY;
+          win.classList.remove('maximized');
+          handle.setPointerCapture(e.pointerId);
+          e.preventDefault();
+        });
+        handle.addEventListener('pointermove', (e) => {
+          if (!resizing) return;
+          win.style.width = Math.max(340, rw + e.clientX - rx) + 'px';
+          win.style.height = Math.max(260, rh + e.clientY - ry) + 'px';
+        });
+        const stopResize = () => { resizing = false; };
+        handle.addEventListener('pointerup', stopResize);
+        handle.addEventListener('pointercancel', stopResize);
       })();
     </script>
   </body>
