@@ -22,6 +22,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="Konstantin Suvorov" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@600&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
@@ -32,7 +38,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <div class="wrap">
-      <header class="site-header">
+      <header class="site-header glass">
         <a class="home" href="/">Konstantin Suvorov</a>
         <nav>
           <a href="/blog/">Blog</a>
@@ -45,7 +51,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <slot />
       </main>
 
-      <footer class="site-footer">
+      <footer class="site-footer glass">
         <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
         <span class="links">
           <a href="https://github.com/kosuvorov" rel="me">GitHub</a>
