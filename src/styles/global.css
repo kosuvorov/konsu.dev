@@ -715,6 +715,10 @@ h1, h2, h3 {
   .menubar {
     padding: env(safe-area-inset-top, 0px) 12px 5px;
     gap: 8px;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom: none;
   }
 
   .menubar-hint,
