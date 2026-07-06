@@ -12,6 +12,8 @@ faq:
     a: "Yes, if it can float over other apps. TikTok and Instagram record from the camera, not the screen, so a floating script never appears in the video. VoicePrompter and Floating Notes can do this."
   - q: "Is there a free voice-tracking teleprompter for iPhone?"
     a: "VoicePrompter's free tier includes full voice tracking with 3 custom scripts plus an unlimited demo script, no account needed. Most competitor free tiers watermark video or limit core features."
+  - q: "What's the best autocue app for iPhone?"
+    a: "Autocue is the British term for a teleprompter, so the ranking is the same: VoicePrompter first for its voice-tracking autocue, with Teleprompter.com and PromptSmart Pro as alternatives."
 ---
 
 I've spent an unreasonable amount of time with iPhone teleprompter apps - recording videos, filming Reels, and studying what every app on the App Store actually does under the marketing. Quick disclosure before the ranking: I build one of these apps (VoicePrompter), so read my bias into everything and judge by the specifics.
@@ -58,3 +60,5 @@ Fixed speed is why teleprompter reads sound robotic. Nobody talks at a constant 
 Don't take my ranking - run this: put the same 60-second script in two apps. Read it once at your natural pace, pause mid-take to think, and restart one sentence from earlier. With a fixed-speed or sound-based app you'll be hunting for your line with your thumb. With whole-script word tracking you just keep talking.
 
 I published a longer version of this comparison with per-app verdicts on the VoicePrompter blog: [Best teleprompter app for iPhone & iPad in 2026](https://voiceprompter.app/blog/best-teleprompter-app-for-iphone.html). And if you're on a Mac, the field looks different - see my [Mac teleprompter comparison](/blog/mac-teleprompter-apps-compared/).
+
+More from this series: [the best teleprompter app for iPad](/blog/best-teleprompter-app-for-ipad/) · [the only floating teleprompter for TikTok and Instagram](/blog/floating-teleprompter-iphone/) · [beam-splitter rig setups](/blog/beam-splitter-teleprompter-iphone-ipad/) · [best autocue app](/blog/best-autocue-app/)

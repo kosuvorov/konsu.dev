@@ -54,4 +54,4 @@ Mac teleprompters have a dirty secret: most of them fail the two tests that matt
 
 For Zoom calls, demos, webinars, and recordings on a Mac, the combination that actually solves the problem is *invisible overlay + reliable word tracking*, and that shortlist is short. Run the two tests above on anything you're considering - they take five minutes and they're brutal.
 
-The longer per-app breakdown lives on the VoicePrompter blog: [Best teleprompter app for Mac in 2026](https://voiceprompter.app/blog/best-teleprompter-app-for-mac.html). iPhone user? The iOS field is different - here's [my iPhone teleprompter comparison](/blog/ios-teleprompter-apps-compared/).
+The longer per-app breakdown lives on the VoicePrompter blog: [Best teleprompter app for Mac in 2026](https://voiceprompter.app/blog/best-teleprompter-app-for-mac.html). iPhone user? The iOS field is different - here's [my iPhone teleprompter comparison](/blog/ios-teleprompter-apps-compared/), and iPad users get [their own ranking](/blog/best-teleprompter-app-for-ipad/).

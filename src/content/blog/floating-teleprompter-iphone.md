@@ -42,4 +42,4 @@ Put that inside the floating window and the workflow gets almost embarrassingly 
 
 As far as I can tell from testing the whole field, no other iOS app has solved both halves. The voice-tracking rivals (Teleprompter.com, PromptSmart) prompt only inside their own apps; the floating rival can't hear you. If someone ships both, I'll update this post - competition on the real problem would be good news for creators.
 
-Try it against your current app: the [free tier](https://voiceprompter.app/ios/) does full voice tracking with three scripts. And if you're weighing the whole market first, I ranked all ten apps in [my iPhone teleprompter comparison](/blog/ios-teleprompter-apps-compared/).
+Try it against your current app: the [free tier](https://voiceprompter.app/ios/) does full voice tracking with three scripts. And if you're weighing the whole market first, I ranked all ten apps in [my iPhone teleprompter comparison](/blog/ios-teleprompter-apps-compared/). Filming with a dedicated camera instead? That's what [beam-splitter rigs](/blog/beam-splitter-teleprompter-iphone-ipad/) and [the iPad](/blog/best-teleprompter-app-for-ipad/) are for.
