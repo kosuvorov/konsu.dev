@@ -11,8 +11,8 @@
   --window-shadow: 0 30px 90px rgba(10, 30, 60, 0.35);
   --spec-top: rgba(255, 255, 255, 0.6);
   --spec-bottom: rgba(255, 255, 255, 0.14);
-  --font-display: 'Google Sans Flex', 'Arial Rounded MT Bold', system-ui, sans-serif;
-  --font-script: 'Caveat', 'Bradley Hand', cursive;
+  --font-display: 'Google Sans Flex', -apple-system, system-ui, sans-serif;
+  --font-script: 'Pacifico', cursive;
   --font-body: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --corner: superellipse(3); /* ~Figma 60% corner smoothing; tune the number to taste */
   --window-bg: #f7f7f9;
@@ -849,6 +849,7 @@ h1, h2, h3 {
 
 .sticky-note h1 {
   font-size: 42px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.01em;
 }
@@ -857,7 +858,7 @@ h1, h2, h3 {
   display: block;
   font-family: var(--font-script);
   font-size: 30px;
-  font-weight: 600;
+  font-weight: normal;
   text-transform: none;
   color: var(--accent);
   margin-top: -6px;
