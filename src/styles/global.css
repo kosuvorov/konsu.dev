@@ -613,6 +613,7 @@ h1, h2, h3 {
 .folder-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 4px;
   padding: 8px;
   width: 100%;
@@ -736,8 +737,6 @@ h1, h2, h3 {
 
   .window {
     border-radius: 16px;
-    margin: 0 16px;
-    width: calc(100% - 32px);
   }
 
   .window-content {
@@ -943,6 +942,9 @@ h1, h2, h3 {
 
   .sticky-note {
     padding: 28px 24px 26px;
+    margin: 0 16px;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
   }
 
   .window-resize {

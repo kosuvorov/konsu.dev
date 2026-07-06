@@ -224,21 +224,26 @@ const contactLinks = [
         });
       })();
 
-      // Mobile dock folder
+      // Mobile dock folders
       (function () {
-        const btn = document.getElementById('dock-folder');
-        const tray = document.getElementById('dock-tray');
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const open = tray.classList.toggle('open');
-          btn.setAttribute('aria-expanded', open);
-        });
-        document.addEventListener('click', (e) => {
-          if (!tray.contains(e.target)) {
-            tray.classList.remove('open');
-            btn.setAttribute('aria-expanded', 'false');
-          }
-        });
+        const setupFolder = (btnId, trayId) => {
+          const btn = document.getElementById(btnId);
+          const tray = document.getElementById(trayId);
+          if (!btn || !tray) return;
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const open = tray.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open);
+          });
+          document.addEventListener('click', (e) => {
+            if (!tray.contains(e.target)) {
+              tray.classList.remove('open');
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        };
+        setupFolder('dock-folder', 'dock-tray');
+        setupFolder('dock-links-folder', 'dock-links-tray');
       })();
 
       // Window: maximize, drag by titlebar, resize from any corner (fine pointers)
