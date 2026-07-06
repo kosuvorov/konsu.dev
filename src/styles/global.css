@@ -1,7 +1,7 @@
 :root {
   --sky: url('/clouds-day.jpg');
-  --glass: rgba(255, 255, 255, 0.68);
-  --glass-strong: rgba(255, 255, 255, 0.82);
+  --glass: rgba(255, 255, 255, 0.48);
+  --glass-strong: rgba(255, 255, 255, 0.62);
   --glass-border: rgba(255, 255, 255, 0.65);
   --text: #17263f;
   --text-light: #4e6079;
@@ -15,8 +15,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --sky: url('/clouds-night.jpg');
-    --glass: rgba(13, 20, 38, 0.62);
-    --glass-strong: rgba(13, 20, 38, 0.78);
+    --glass: rgba(13, 20, 38, 0.42);
+    --glass-strong: rgba(13, 20, 38, 0.58);
     --glass-border: rgba(255, 255, 255, 0.14);
     --text: #eef2fa;
     --text-light: #a8b4c8;
@@ -82,9 +82,10 @@ h1, h2, h3 {
 
 .glass {
   position: relative;
+  corner-shape: squircle;
   background: var(--glass);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(9px) saturate(1.5);
+  backdrop-filter: blur(9px) saturate(1.5);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow:
@@ -182,6 +183,7 @@ h1, h2, h3 {
 }
 
 .card {
+  corner-shape: squircle;
   display: block;
   padding: 16px 18px;
   border-radius: 16px;
@@ -383,6 +385,7 @@ h1, h2, h3 {
 /* ── Dock ── */
 .dock {
   position: fixed;
+  corner-shape: squircle;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
@@ -393,8 +396,8 @@ h1, h2, h3 {
   padding: 10px 14px;
   border-radius: 26px;
   background: var(--glass);
-  -webkit-backdrop-filter: blur(18px) saturate(1.5);
-  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(10px) saturate(1.6);
+  backdrop-filter: blur(10px) saturate(1.6);
   border: 1px solid var(--glass-border);
   box-shadow:
     0 18px 50px rgba(10, 30, 60, 0.28),
@@ -433,6 +436,7 @@ h1, h2, h3 {
 }
 
 .dock-icon {
+  corner-shape: squircle;
   display: grid;
   place-items: center;
   width: 46px;
@@ -448,6 +452,8 @@ h1, h2, h3 {
 }
 
 img.dock-icon {
+  corner-shape: squircle;
+  border-radius: 13px;
   box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25);
 }
 
