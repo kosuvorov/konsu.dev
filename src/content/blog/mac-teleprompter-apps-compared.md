@@ -17,14 +17,14 @@ Mac teleprompters have a dirty secret: most of them fail the two tests that matt
 
 ## The field at a glance
 
-| App | Voice scrolling | Invisible on screen share | Languages | Install |
-|-----|-----------------|---------------------------|-----------|---------|
-| VoicePrompter | Word tracking + sound mode | Yes | 60+ | App Store |
-| Teleprompter.com | Word tracking, forward only | No | Partial | App Store / web |
-| PromptSmart | Word tracking (VoiceTrack) | No | English-focused | App Store (iOS port) |
-| Notchie | Sound only | Yes (notch) | n/a | App Store |
-| Textream | Word tracking, unreliable | Yes | CJK reported broken | GitHub only |
-| BIGVU / Speakflow | Suite / web prompter | No | Varies | Web |
+| App | Voice scrolling | Invisible on share | Languages | Install |
+|-----|-----------------|:------------------:|-----------|---------|
+| VoicePrompter | Word tracking + sound mode | <span class="yes">✓</span> | 60+ | App Store |
+| Teleprompter.com | Word tracking, forward only | <span class="no">✕</span> | Partial | App Store / web |
+| PromptSmart | Word tracking (VoiceTrack) | <span class="no">✕</span> | English-focused | App Store (iOS port) |
+| Notchie | Sound only | <span class="yes">✓</span> (notch) | n/a (sound) | App Store |
+| Textream | Word tracking, unreliable | <span class="yes">✓</span> | CJK broken | GitHub only |
+| BIGVU / Speakflow | Suite / web prompter | <span class="no">✕</span> | Varies | Web |
 
 ## Honest verdicts
 

@@ -472,6 +472,66 @@ h1, h2, h3 {
   border-radius: 16px;
 }
 
+.prose table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 26px 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+
+.prose thead th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--glass-border);
+  white-space: nowrap;
+}
+
+.prose td {
+  padding: 10px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 55%, transparent);
+  min-width: 84px;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--text) 2.5%, transparent);
+}
+
+.prose td:first-child,
+.prose th:first-child {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.prose td .yes {
+  color: #1e9e50;
+  font-weight: 800;
+}
+
+.prose td .no {
+  color: var(--text-light);
+}
+
 .prose blockquote {
   border-left: 3px solid var(--accent);
   padding-left: 18px;

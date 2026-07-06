@@ -16,18 +16,18 @@ Fixed speed is why teleprompter reads sound robotic. Nobody talks at a constant 
 
 ## The quick ranking
 
-| App | Scrolling | Follows your whole script? | Floats over other apps |
-|-----|-----------|---------------------------|------------------------|
-| VoicePrompter | Word tracking + sound + constant | Yes, incl. backward | Yes |
-| Teleprompter.com | Voice-following + timed + manual | Forward only | No |
-| PromptSmart Pro | Word tracking (VoiceTrack) | Holds place, forward only | No |
-| VoiceScroll | Word tracking | Forward only | No |
-| BIGVU | Fixed speed + pause on silence | No | No |
-| Video Teleprompter | Fixed speed + remotes | No | No |
-| Teleprompter Pro | Fixed speed + timed | No | No |
-| Teleprompter - VILO | Fixed speed | No | No |
-| Floating Notes | Fixed speed | No | Yes |
-| Telepromptr | Fixed speed + timed | No | No |
+| App | Scrolling | Whole-script tracking | Floats over apps |
+|-----|-----------|:---------------------:|:----------------:|
+| VoicePrompter | Word tracking + sound + constant | <span class="yes">✓</span> incl. backward | <span class="yes">✓</span> |
+| Teleprompter.com | Voice-following + timed + manual | forward only | <span class="no">✕</span> |
+| PromptSmart Pro | Word tracking (VoiceTrack) | holds place | <span class="no">✕</span> |
+| VoiceScroll | Word tracking | forward only | <span class="no">✕</span> |
+| BIGVU | Fixed speed + pause on silence | <span class="no">✕</span> | <span class="no">✕</span> |
+| Video Teleprompter | Fixed speed + remotes | <span class="no">✕</span> | <span class="no">✕</span> |
+| Teleprompter Pro | Fixed speed + timed | <span class="no">✕</span> | <span class="no">✕</span> |
+| Teleprompter - VILO | Fixed speed | <span class="no">✕</span> | <span class="no">✕</span> |
+| Floating Notes | Fixed speed | <span class="no">✕</span> | <span class="yes">✓</span> |
+| Telepromptr | Fixed speed + timed | <span class="no">✕</span> | <span class="no">✕</span> |
 
 ## What I'd actually install
 
