@@ -2,6 +2,7 @@
 title: "A graph of my LinkedIn connections"
 description: "A small browser tool that turns your LinkedIn connections export into an Obsidian-style force graph, grouped by company, role, or year."
 date: 2026-05-10
+tldr: "A free browser tool that turns your LinkedIn connections export into an interactive force graph, grouped by company, role, or year. Nothing is uploaded - everything runs locally in your browser."
 ---
 
 I made a small tool that turns your LinkedIn connections into an Obsidian-style force graph - clusters of people grouped by company, role, or year, with you in the middle.

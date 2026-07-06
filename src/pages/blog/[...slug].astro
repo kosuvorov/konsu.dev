@@ -21,19 +21,36 @@ const fmt = (d: Date) =>
 const fmtShort = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.data.title,
-  description: post.data.description,
-  datePublished: post.data.date.toISOString(),
-  ...(post.data.updated && { dateModified: post.data.updated.toISOString() }),
-  author: {
-    '@type': 'Person',
-    name: 'Konstantin Suvorov',
-    url: 'https://konsu.dev/',
+const tldr = post.data.tldr ?? post.data.description;
+const faq = post.data.faq ?? [];
+
+const schema: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    ...(post.data.updated && { dateModified: post.data.updated.toISOString() }),
+    author: {
+      '@type': 'Person',
+      name: 'Konstantin Suvorov',
+      url: 'https://konsu.dev/',
+    },
   },
-};
+];
+
+if (faq.length > 0) {
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  });
+}
 ---
 
 <Base title={`${post.data.title} - Konstantin Suvorov`} description={post.data.description} windowTitle="Blog" type="article" noPad>
@@ -61,9 +78,23 @@ const schema = {
         <time datetime={post.data.date.toISOString()} class="notes-date">{fmt(post.data.date)}</time>
         <h1>{post.data.title}</h1>
       </header>
+      <aside class="tldr">
+        <strong>TL;DR:</strong> {tldr}
+      </aside>
       <div class="prose">
         <Content />
       </div>
+      {faq.length > 0 && (
+        <section class="faq">
+          <h2>Frequently asked questions</h2>
+          {faq.map((item) => (
+            <details class="faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </section>
+      )}
     </article>
   </div>
 </Base>

@@ -2,6 +2,16 @@
 title: "I tested every teleprompter app for iPhone. Most of them can't hear you."
 description: "Hands-on comparison of 10 iOS teleprompter apps in 2026: which ones actually follow your voice, which just scroll at a fixed speed, and what I'd install first."
 date: 2026-07-06
+tldr: "Of the 10 most popular iPhone teleprompter apps, only three have real voice tracking - and only VoicePrompter follows your whole script (including backward) and floats over TikTok or Instagram while you film. Teleprompter.com and PromptSmart Pro are the strongest alternatives; the other seven scroll at a fixed speed."
+faq:
+  - q: "Which iPhone teleprompter apps actually follow your voice?"
+    a: "As of mid-2026: VoicePrompter, Teleprompter.com (Auto Scroll), PromptSmart Pro (VoiceTrack), and newcomer VoiceScroll. BIGVU pauses on silence but doesn't track words; the rest scroll at a fixed speed."
+  - q: "What's the difference between voice tracking and sound scrolling?"
+    a: "Voice tracking uses speech recognition to follow your actual words, so pauses, ad-libs, and skipped lines all work. Sound scrolling just moves while it hears noise - it never knows which word you're on."
+  - q: "Can a teleprompter stay invisible while I record in TikTok or Instagram?"
+    a: "Yes, if it can float over other apps. TikTok and Instagram record from the camera, not the screen, so a floating script never appears in the video. VoicePrompter and Floating Notes can do this."
+  - q: "Is there a free voice-tracking teleprompter for iPhone?"
+    a: "VoicePrompter's free tier includes full voice tracking with 3 custom scripts plus an unlimited demo script, no account needed. Most competitor free tiers watermark video or limit core features."
 ---
 
 I've spent an unreasonable amount of time with iPhone teleprompter apps - recording videos, filming Reels, and studying what every app on the App Store actually does under the marketing. Quick disclosure before the ranking: I build one of these apps (VoicePrompter), so read my bias into everything and judge by the specifics.

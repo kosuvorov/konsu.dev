@@ -2,6 +2,16 @@
 title: "Every Mac teleprompter app, tested: only a few can survive a screen share"
 description: "Hands-on comparison of macOS teleprompter apps in 2026: word tracking vs sound detection, which overlays stay invisible on Zoom, and honest verdicts on each."
 date: 2026-07-06
+tldr: "Most Mac teleprompters fail two tests: staying invisible during screen sharing and following you when you go off-script. VoicePrompter passes both (invisible overlay + whole-script word tracking in 60+ languages); Teleprompter.com and PromptSmart have real voice tech but show up in screen shares; Notchie is invisible but only detects sound."
+faq:
+  - q: "Do any Mac teleprompters stay invisible during screen sharing?"
+    a: "Very few. VoicePrompter's overlay is excluded from screen capture at the macOS level, so Zoom, Teams, Meet, OBS, and QuickTime don't see it. Notchie and Textream are also invisible; most other apps appear in the share."
+  - q: "What does 'voice-activated' actually mean in Mac teleprompter marketing?"
+    a: "Two different things. Sound detection scrolls on audio volume and can't follow you off-script. Word tracking uses real speech recognition to follow your actual words and position. Check which one an app means before buying."
+  - q: "Which Mac teleprompter works in languages other than English?"
+    a: "VoicePrompter tracks 60+ languages with on-device recognition. PromptSmart is strongest in English; Textream's tracker currently reports broken Chinese, Japanese, and Korean support."
+  - q: "Is there a free teleprompter for Mac?"
+    a: "The VoicePrompter web app is free and runs in any browser with voice scrolling and mirror mode. The native Mac app adds the always-on-top invisible overlay, with a free tier of 3 scripts."
 ---
 
 Mac teleprompters have a dirty secret: most of them fail the two tests that matter. Share your screen on Zoom and your script is suddenly visible to everyone; go off-script for one ad-lib and the "voice-activated" scrolling strands you. I've tested the field extensively - and, disclosure up front, I build one of these apps (VoicePrompter), so weigh my bias and check the specifics yourself.

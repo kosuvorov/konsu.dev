@@ -1192,3 +1192,46 @@ h1, h2, h3 {
   white-space: nowrap;
   border: 0;
 }
+
+/* ── TL;DR + FAQ (GEO blocks) ── */
+.tldr {
+  margin: 18px 0 4px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.tldr strong {
+  color: var(--accent);
+}
+
+.faq {
+  margin-top: 34px;
+  padding-top: 8px;
+}
+
+.faq h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.faq-item {
+  border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 55%, transparent);
+  padding: 10px 2px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15.5px;
+}
+
+.faq-item p {
+  margin: 8px 0 4px;
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.6;
+}
