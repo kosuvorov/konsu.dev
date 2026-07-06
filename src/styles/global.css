@@ -61,7 +61,7 @@ body {
 .wrap {
   max-width: 680px;
   margin: 0 auto;
-  padding: 0 20px 48px;
+  padding: 0 20px 140px;
 }
 
 a {
@@ -81,12 +81,25 @@ h1, h2, h3 {
 }
 
 .glass {
+  position: relative;
   background: var(--glass);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  box-shadow: var(--shadow);
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass {
+    box-shadow:
+      var(--shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  }
 }
 
 /* ── Header ── */
@@ -111,20 +124,11 @@ h1, h2, h3 {
   color: var(--accent);
 }
 
-.site-header nav {
-  display: flex;
-  gap: 18px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.site-header nav a {
+.header-hint {
+  font-family: var(--font-script);
+  font-size: 21px;
   color: var(--text-light);
-}
-
-.site-header nav a:hover {
-  color: var(--accent);
-  text-decoration: none;
+  transform: rotate(-2deg);
 }
 
 /* ── Hero ── */
@@ -372,5 +376,158 @@ h1, h2, h3 {
 
   .article-header h1 {
     font-size: 27px;
+  }
+}
+
+
+/* ── Dock ── */
+.dock {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 26px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 18px 50px rgba(10, 30, 60, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dock {
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Refraction layer: Chromium renders the SVG displacement; others ignore it */
+.dock-liquid {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  -webkit-backdrop-filter: url(#liquid-lens);
+  backdrop-filter: url(#liquid-lens);
+}
+
+.dock-item {
+  position: relative;
+  display: block;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dock-item:hover {
+  transform: translateY(-8px) scale(1.14);
+  text-decoration: none;
+}
+
+.dock-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.dock-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+img.dock-icon {
+  box-shadow: 0 4px 12px rgba(10, 30, 60, 0.25);
+}
+
+.tile-sky {
+  background: linear-gradient(160deg, #4fb3f6, #1f7ad4);
+}
+
+.tile-sunset {
+  background: linear-gradient(160deg, #ffb35c, #f4772e);
+}
+
+.tile-grape {
+  background: linear-gradient(160deg, #b07cf7, #7c48d8);
+}
+
+.tile-ink {
+  background: linear-gradient(160deg, #4a5568, #1a202c);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--glass-border);
+  margin: 0 2px;
+}
+
+/* Tooltip labels */
+.dock-item::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 13px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dock-item:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+@media (max-width: 560px) {
+  .dock {
+    gap: 7px;
+    padding: 8px 11px;
+    bottom: 12px;
+  }
+
+  .dock-icon,
+  img.dock-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  .dock-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .header-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-item,
+  .dock-item::after {
+    transition: none;
   }
 }
