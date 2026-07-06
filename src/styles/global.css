@@ -302,6 +302,8 @@ h1, h2, h3 {
 
 .window-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -985,13 +987,13 @@ h1, h2, h3 {
 /* ── window content without padding (Notes layout) ── */
 .window-content.no-pad {
   padding: 0;
-  display: flex;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .window-content.no-pad main {
   flex: 1;
   display: flex;
+  flex-direction: column;
   min-height: 0;
 }
 
@@ -1081,6 +1083,7 @@ h1, h2, h3 {
 
 .notes-content {
   flex: 1;
+  min-width: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 22px 34px 40px;
