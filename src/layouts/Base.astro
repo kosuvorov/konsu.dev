@@ -6,9 +6,10 @@ interface Props {
   description: string;
   windowTitle?: string;
   type?: string;
+  noPad?: boolean;
 }
 
-const { title, description, windowTitle, type = 'website' } = Astro.props;
+const { title, description, windowTitle, type = 'website', noPad = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const hasWindow = Boolean(windowTitle);
 const path = Astro.url.pathname;
@@ -16,7 +17,7 @@ const path = Astro.url.pathname;
 const dockApps = [
   { href: '/', label: 'Home', icon: '/dock-home.png', active: path === '/' },
   { href: '/blog/', label: 'Blog', icon: '/dock-notes.webp', active: path.startsWith('/blog') },
-  { href: '/projects/', label: 'Projects', icon: '/dock-xcode.webp', active: path.startsWith('/projects') },
+  { href: '/projects/', label: 'Projects', icon: '/dock-xcode.webp', active: path.startsWith('/projects'), pad: true },
   { href: '/videos/', label: 'YouTube', icon: '/dock-youtube.webp', active: path.startsWith('/videos') },
 ];
 
@@ -32,7 +33,7 @@ const dockLinks = [
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -53,7 +54,9 @@ const dockLinks = [
     <meta name="twitter:card" content="summary" />
     <script is:inline>
       const saved = localStorage.getItem('theme');
-      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      const mode = saved === 'light' || saved === 'dark' ? saved : 'auto';
+      document.documentElement.dataset.themeMode = mode;
+      if (mode !== 'auto') document.documentElement.dataset.theme = mode;
     </script>
     <slot name="head" />
   </head>
@@ -75,9 +78,10 @@ const dockLinks = [
         <span class="menubar-battery" aria-label="Battery full" title="Fully charged, unlike me">
           <svg viewBox="0 0 28 14" width="26" height="13" aria-hidden="true"><rect x="1" y="1" width="22" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.55"/><rect x="3" y="3" width="18" height="8" rx="2" fill="currentColor"/><path d="M25 4.6v4.8c1.4-.3 2.3-1.2 2.3-2.4S26.4 4.9 25 4.6Z" fill="currentColor" opacity="0.55"/></svg>
         </span>
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Theme: auto. Click to change" title="Theme: auto">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.6 14.6A8.7 8.7 0 0 1 9.4 3.4a8.7 8.7 0 1 0 11.2 11.2Z"/></svg>
+          <svg class="icon-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17" stroke-width="1.6"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17" fill="currentColor" stroke="none"/></svg>
         </button>
         <span class="menubar-clock" id="menubar-clock"></span>
       </div>
@@ -95,19 +99,21 @@ const dockLinks = [
             <span class="window-title">{windowTitle}</span>
             <span class="traffic-spacer" aria-hidden="true"></span>
           </div>
-          <div class="window-content">
+          <div class={`window-content${noPad ? ' no-pad' : ''}`}>
             <main>
               <slot />
             </main>
-            <footer class="window-footer">
-              <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
-              <span class="links">
-                <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
-                <a href="https://www.instagram.com/kosuvorov/" rel="me">Instagram</a>
-                <a href="mailto:hey@konsu.dev">Email</a>
-                <a href="/rss.xml">RSS</a>
-              </span>
-            </footer>
+            {!noPad && (
+              <footer class="window-footer">
+                <span>© {new Date().getFullYear()} Konstantin Suvorov</span>
+                <span class="links">
+                  <a href="https://www.youtube.com/@kosuvorov" rel="me">YouTube</a>
+                  <a href="https://www.instagram.com/kosuvorov/" rel="me">Instagram</a>
+                  <a href="mailto:hey@konsu.dev">Email</a>
+                  <a href="/rss.xml">RSS</a>
+                </span>
+              </footer>
+            )}
           </div>
           <span class="window-resize nw" data-dir="nw" aria-hidden="true"></span>
           <span class="window-resize ne" data-dir="ne" aria-hidden="true"></span>
@@ -125,15 +131,28 @@ const dockLinks = [
       <div class="dock-liquid" aria-hidden="true"></div>
       {dockApps.map((app) => (
         <a href={app.href} class={`dock-item${app.active ? ' active' : ''}`} data-label={app.label}>
-          <img class="dock-icon" src={app.icon} alt="" width="52" height="52" />
+          <img class={`dock-icon${app.pad ? ' scale-up' : ''}`} src={app.icon} alt="" width="52" height="52" />
         </a>
       ))}
       <span class="dock-divider" aria-hidden="true"></span>
       {dockLinks.map((link) => (
-        <a href={link.href} class="dock-item" data-label={link.label} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+        <a href={link.href} class="dock-item dock-ext" data-label={link.label} rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
           <img class="dock-icon" src={link.icon} alt="" width="52" height="52" />
         </a>
       ))}
+      <button class="dock-item dock-folder" id="dock-folder" data-label="More" aria-label="More links" aria-expanded="false">
+        <span class="dock-icon folder-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.5h7A2.5 2.5 0 0 1 21 9v8.5a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-11Z"/></svg>
+        </span>
+      </button>
+      <div class="dock-tray" id="dock-tray">
+        {dockLinks.map((link) => (
+          <a href={link.href} class="tray-item" rel={link.href.startsWith('http') ? 'me noopener' : undefined}>
+            <img src={link.icon} alt="" width="44" height="44" />
+            <span>{link.label}</span>
+          </a>
+        ))}
+      </div>
     </nav>
 
     <script is:inline>
@@ -151,15 +170,22 @@ const dockLinks = [
         setInterval(tick, 20000);
       })();
 
-      // Theme toggle with crossfade (View Transitions where supported)
+      // Theme: auto -> dark -> light -> auto, crossfaded via View Transitions
       (function () {
         const btn = document.getElementById('theme-toggle');
-        const mq = window.matchMedia('(prefers-color-scheme: dark)');
-        const current = () => document.documentElement.dataset.theme || (mq.matches ? 'dark' : 'light');
+        const order = { auto: 'dark', dark: 'light', light: 'auto' };
         const apply = () => {
-          const next = current() === 'dark' ? 'light' : 'dark';
-          document.documentElement.dataset.theme = next;
-          localStorage.setItem('theme', next);
+          const next = order[document.documentElement.dataset.themeMode || 'auto'];
+          document.documentElement.dataset.themeMode = next;
+          if (next === 'auto') {
+            delete document.documentElement.dataset.theme;
+            localStorage.removeItem('theme');
+          } else {
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+          }
+          btn.title = 'Theme: ' + next;
+          btn.setAttribute('aria-label', 'Theme: ' + next + '. Click to change');
         };
         btn.addEventListener('click', () => {
           if (document.startViewTransition) {
@@ -170,10 +196,28 @@ const dockLinks = [
         });
       })();
 
+      // Mobile dock folder
+      (function () {
+        const btn = document.getElementById('dock-folder');
+        const tray = document.getElementById('dock-tray');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = tray.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open);
+        });
+        document.addEventListener('click', (e) => {
+          if (!tray.contains(e.target)) {
+            tray.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      })();
+
       // Window: maximize, drag by titlebar, resize from any corner (fine pointers)
       (function () {
         const win = document.getElementById('window');
         if (!win) return;
+        let ox = 0, oy = 0;
         document.getElementById('window-zoom').addEventListener('click', () => {
           win.classList.toggle('maximized');
           win.style.transform = '';
@@ -183,7 +227,6 @@ const dockLinks = [
         });
         if (!window.matchMedia('(pointer: fine)').matches) return;
 
-        let ox = 0, oy = 0;
         const bar = document.getElementById('window-titlebar');
         let sx = 0, sy = 0, dragging = false;
         bar.addEventListener('pointerdown', (e) => {
@@ -229,9 +272,8 @@ const dockLinks = [
             const newH = Math.max(260, south ? rh + dy : rh - dy);
             win.style.width = newW + 'px';
             win.style.height = newH + 'px';
-            // resizing from a left/top edge keeps the opposite edge anchored
-            ox = box + (east ? 0 : (rw - newW) / 2) - (east ? (rw - newW) / 2 : 0);
-            oy = boy + (south ? 0 : (rh - newH) / 2) - (south ? (rh - newH) / 2 : 0);
+            ox = box + (east ? (newW - rw) / 2 : (rw - newW) / 2);
+            oy = boy + (south ? (newH - rh) / 2 : (rh - newH) / 2);
             win.style.transform = `translate(${ox}px, ${oy}px)`;
           });
           const stopResize = () => { resizing = false; };

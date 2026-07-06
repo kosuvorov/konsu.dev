@@ -14,7 +14,7 @@
   --font-display: 'Google Sans Flex', 'Arial Rounded MT Bold', system-ui, sans-serif;
   --font-script: 'Caveat', 'Bradley Hand', cursive;
   --font-body: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --corner: superellipse(2.4); /* ~Figma 60% corner smoothing; tune the number to taste */
+  --corner: superellipse(3); /* ~Figma 60% corner smoothing; tune the number to taste */
   --window-bg: #f7f7f9;
   --window-titlebar-bg: rgba(255, 255, 255, 0.6);
 }
@@ -119,8 +119,8 @@ h1, h2, h3 {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  height: 32px;
-  padding: 0 14px;
+  height: calc(32px + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) 14px 0;
   background: color-mix(in srgb, var(--glass) 60%, transparent);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
   backdrop-filter: blur(24px) saturate(1.4);
@@ -185,17 +185,15 @@ h1, h2, h3 {
   height: 16px;
 }
 
-/* moon shown in light mode (click = go dark), sun in dark mode */
-.icon-sun { display: none; }
-.icon-moon { display: block; }
+/* the toggle shows the CURRENT mode: half-circle = auto, sun = light, moon = dark */
+.icon-sun, .icon-moon, .icon-auto { display: none; }
 
-:root[data-theme='dark'] .icon-sun { display: block; }
-:root[data-theme='dark'] .icon-moon { display: none; }
+:root[data-theme-mode='auto'] .icon-auto { display: block; }
+:root[data-theme-mode='light'] .icon-sun { display: block; }
+:root[data-theme-mode='dark'] .icon-moon { display: block; }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .icon-sun { display: block; }
-  :root:not([data-theme='light']) .icon-moon { display: none; }
-}
+/* no-JS / pre-hydration fallback */
+:root:not([data-theme-mode]) .icon-auto { display: block; }
 
 .menubar-clock {
   font-variant-numeric: tabular-nums;
@@ -210,7 +208,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 52px 18px 104px;
+  padding: calc(52px + env(safe-area-inset-top, 0px)) 18px calc(104px + env(safe-area-inset-bottom, 0px));
 }
 
 .window {
@@ -577,6 +575,73 @@ h1, h2, h3 {
   filter: drop-shadow(0 4px 10px rgba(10, 30, 60, 0.3));
 }
 
+/* some source icons carry extra transparent padding - normalize visually */
+.dock-icon.scale-up {
+  transform: scale(1.16);
+}
+
+.dock-folder {
+  display: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.folder-icon {
+  display: grid;
+  place-items: center;
+  color: #58a6e8;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.45));
+  border-radius: 14px;
+  corner-shape: var(--corner);
+}
+
+.folder-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.dock-tray {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  right: 6px;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  padding: 12px;
+  border-radius: 22px;
+  corner-shape: var(--corner);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+}
+
+.dock-tray.open {
+  display: grid;
+}
+
+.tray-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.tray-item:hover {
+  background: var(--glass);
+  text-decoration: none;
+}
+
 /* running-app indicator dot */
 .dock-item.active::before {
   content: '';
@@ -713,13 +778,13 @@ h1, h2, h3 {
 .window-resize.se::after {
   content: '';
   position: absolute;
-  right: 9px;
-  bottom: 9px;
-  width: 9px;
-  height: 9px;
+  right: 8px;
+  bottom: 8px;
+  width: 12px;
+  height: 12px;
   border-right: 2px solid var(--text-light);
   border-bottom: 2px solid var(--text-light);
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 11px;
   opacity: 0.6;
 }
 
@@ -854,4 +919,203 @@ h1, h2, h3 {
 
 .video-card img {
   background: #000;
+}
+
+
+/* ── window content without padding (Notes layout) ── */
+.window-content.no-pad {
+  padding: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.window-content.no-pad main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.notes {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  width: 100%;
+}
+
+.notes-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-right: 1px solid var(--glass-border);
+  background: color-mix(in srgb, var(--window-bg) 88%, var(--text) 3%);
+  padding: 14px 10px;
+}
+
+.notes-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 10px 10px;
+}
+
+.notes-heading a {
+  color: var(--accent);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.notes-list {
+  list-style: none;
+}
+
+.notes-item {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 12px;
+  corner-shape: var(--corner);
+  color: var(--text);
+  border-bottom: 1px solid color-mix(in srgb, var(--glass-border) 40%, transparent);
+}
+
+.notes-item:hover {
+  text-decoration: none;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+.notes-item.current {
+  background: #ffd60a;
+  color: #3a2f00;
+  border-bottom-color: transparent;
+}
+
+.notes-item.current .notes-meta,
+.notes-item.current .notes-snippet {
+  color: #6b5d1e;
+}
+
+.notes-item strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.notes-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.notes-snippet {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notes-content {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 34px 40px;
+}
+
+.notes-content .article-header {
+  margin: 4px 0 6px;
+  text-align: left;
+}
+
+.notes-date {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 14px;
+}
+
+.notes-back {
+  display: none;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.notes-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--text-light);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── Phone: fullscreen windows, folder dock, collapsing Notes panes ── */
+@media (max-width: 600px) {
+  .desktop {
+    padding: calc(32px + env(safe-area-inset-top, 0px)) 0 0;
+  }
+
+  .window {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .window-content {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .window-content.no-pad {
+    padding-bottom: 0;
+  }
+
+  .notes-content,
+  .notes-sidebar {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .window-resize {
+    display: none;
+  }
+
+  /* dock folder replaces overflow icons */
+  .dock-ext,
+  .dock-divider {
+    display: none;
+  }
+
+  .dock-folder {
+    display: block;
+  }
+
+  .dock {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Notes: single pane like iPhone */
+  .notes-sidebar-collapse {
+    display: none;
+  }
+
+  .notes-sidebar {
+    width: 100%;
+    border-right: 0;
+  }
+
+  .notes-back {
+    display: inline-block;
+  }
+
+  .notes-content {
+    padding: 16px 20px 110px;
+  }
 }

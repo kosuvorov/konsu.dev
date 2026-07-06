@@ -13,8 +13,13 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const fmtShort = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 const schema = {
   '@context': 'https://schema.org',
@@ -31,15 +36,34 @@ const schema = {
 };
 ---
 
-<Base title={`${post.data.title} - Konstantin Suvorov`} description={post.data.description} windowTitle={post.data.title} type="article">
+<Base title={`${post.data.title} - Konstantin Suvorov`} description={post.data.description} windowTitle="Notes" type="article" noPad>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
-  <article class="article-panel">
-    <header class="article-header">
-      <h1>{post.data.title}</h1>
-      <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
-    </header>
-    <div class="prose">
-      <Content />
-    </div>
-  </article>
+  <div class="notes">
+    <aside class="notes-sidebar notes-sidebar-collapse">
+      <h2 class="notes-heading"><a href="/blog/">‹ All Notes</a></h2>
+      <ul class="notes-list">
+        {posts.map((p) => (
+          <li>
+            <a href={`/blog/${p.id}/`} class={`notes-item${p.id === post.id ? ' current' : ''}`}>
+              <strong>{p.data.title}</strong>
+              <span class="notes-meta">
+                <time datetime={p.data.date.toISOString()}>{fmtShort(p.data.date)}</time>
+                <span class="notes-snippet">{p.data.description.slice(0, 44)}…</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+    <article class="notes-content">
+      <a class="notes-back" href="/blog/">‹ All Notes</a>
+      <header class="article-header">
+        <time datetime={post.data.date.toISOString()} class="notes-date">{fmt(post.data.date)}</time>
+        <h1>{post.data.title}</h1>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </div>
 </Base>
