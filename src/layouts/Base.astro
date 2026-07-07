@@ -129,7 +129,7 @@ const contactLinks = [
         ))}
       </div>
       {hasWindow ? (
-        <section class="window" id="window">
+        <section class={`window${windowTitle === 'Blog' ? ' window-blog' : ''}`} id="window">
           <div class="window-titlebar" id="window-titlebar">
             <span class="traffic-lights">
               <a class="light red" href="/" aria-label="Close window" data-umami-event="window-close"></a>

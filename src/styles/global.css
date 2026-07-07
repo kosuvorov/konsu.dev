@@ -236,6 +236,10 @@ h1, h2, h3 {
   overflow: hidden;
 }
 
+.window.window-blog {
+  width: min(1200px, 100%);
+}
+
 .window.maximized {
   width: 100%;
 }
