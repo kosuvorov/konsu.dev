@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Download: Rounded Rectangle Mask for Final Cut Pro - Konstantin Suvorov"
+  windowTitle="Downloads"
+  description="Download the free Rounded Rectangle Mask effect for Final Cut Pro."
+>
+  <meta name="robots" content="noindex" slot="head" />
+  <section class="panel prose">
+    <h2 class="section-title" style="margin-top:18px;">You're in! 🎉</h2>
+    <p>Thanks for confirming your email. Here's your Rounded Rectangle Mask for Final Cut Pro:</p>
+    <p>
+      <a class="download-button" href="/downloads/rounded-rectangle-mask-fcp.zip" download data-umami-event="fcp-mask-download">
+        Download the effect (.zip)
+      </a>
+    </p>
+
+    <h3>How to install it</h3>
+    <ol>
+      <li>Unzip the file.</li>
+      <li>In Finder, press <strong>Cmd + Shift + G</strong> and paste <code>~/Movies/Motion Templates.localized/Effects.localized/</code> (create the <code>Motion Templates</code> and <code>Effects</code> folders if they don't exist yet).</li>
+      <li>Copy the <strong>KS Effects</strong> folder there.</li>
+      <li>Restart Final Cut Pro.</li>
+    </ol>
+    <p>
+      You'll find it in the <strong>Effects browser</strong> under <strong>KS Effects → Rounded rectangle mask</strong>.
+      Drag it onto a clip and adjust Roundness, Width, Height and Position in the Video inspector.
+    </p>
+    <p>
+      More about how it works (and how to make your own effects) in the
+      <a href="/blog/final-cut-pro-rounded-rectangle-mask/">blog post</a>. And if you make something cool with it, I'd love to see it:
+      <a href="mailto:hey@konsu.dev">hey@konsu.dev</a> :)
+    </p>
+  </section>
+</Base>

@@ -98,3 +98,31 @@ if (faq.length > 0) {
     </article>
   </div>
 </Base>
+
+<script>
+  // Kit signup forms embedded in posts: submit in place, fall back to a normal POST without JS.
+  document.querySelectorAll<HTMLFormElement>('form.kit-form').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.kit-form-status');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (button) button.disabled = true;
+      form.dataset.state = 'sending';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.status === 'failed') throw new Error(data.errors?.messages?.[0] ?? 'failed');
+        form.dataset.state = 'done';
+        if (status) status.textContent = 'Almost there! Check your inbox and click the confirmation link to get the download.';
+      } catch {
+        form.dataset.state = 'error';
+        if (status) status.textContent = 'Something went wrong. Please try again or email me at hey@konsu.dev.';
+        if (button) button.disabled = false;
+      }
+    });
+  });
+</script>
