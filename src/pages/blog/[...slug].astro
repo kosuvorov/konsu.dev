@@ -117,7 +117,11 @@ if (faq.length > 0) {
         const data = await res.json().catch(() => ({}));
         if (!res.ok || data.status === 'failed') throw new Error(data.errors?.messages?.[0] ?? 'failed');
         form.dataset.state = 'done';
-        if (status) status.textContent = 'Almost there! Check your inbox and click the confirmation link to get the download.';
+        if (form.dataset.redirect) {
+          window.location.href = form.dataset.redirect;
+          return;
+        }
+        if (status) status.textContent = "You're in! Thanks for signing up.";
       } catch {
         form.dataset.state = 'error';
         if (status) status.textContent = 'Something went wrong. Please try again or email me at hey@konsu.dev.';

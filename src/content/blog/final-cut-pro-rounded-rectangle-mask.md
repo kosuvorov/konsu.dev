@@ -2,7 +2,7 @@
 title: "Rounded rectangle mask for Final Cut Pro (free effect)"
 description: "Final Cut Pro's built-in shape mask makes uneven, asymmetric rounded corners. I made a free rounded rectangle mask effect with clean, symmetrical corners - here's how it works and how to get it."
 date: 2026-10-15
-tldr: "Final Cut Pro's built-in Shape Mask can round corners, but they come out asymmetric - and the wider your rectangle, the worse it looks. I built a free Rounded Rectangle Mask effect with symmetrical corners and simple Width, Height, Position, Roundness and Invert controls. Enter your email below and you'll get the download link."
+tldr: "Final Cut Pro's built-in Shape Mask can round corners, but they come out asymmetric - and the wider your rectangle, the worse it looks. I built a free Rounded Rectangle Mask effect with symmetrical corners and simple Width, Height, Position, Roundness and Invert controls. Enter your email below and you'll get the download right away."
 faq:
   - q: "How do I make rounded corners on a video in Final Cut Pro?"
     a: "Apply a mask effect with rounded corners to the clip. The built-in Shape Mask has a roundness option, but the corners are asymmetric on non-square shapes. My free Rounded Rectangle Mask effect gives you symmetrical corners with a single Roundness slider."
@@ -13,7 +13,7 @@ faq:
   - q: "Do I need Motion to use this effect?"
     a: "No. The effect works in Final Cut Pro on its own. You only need Motion if you want to open it and change how it works."
   - q: "Is the effect really free?"
-    a: "Yes. You just confirm your email and get the download link. I'll also email you when I release new Final Cut Pro tools, and you can unsubscribe anytime."
+    a: "Yes. Enter your email and you go straight to the download. In exchange, you join my email list - I'll let you know when I release new Final Cut Pro tools, and you can unsubscribe anytime."
 ---
 
 If you ever tried to make a rounded rectangle mask in Final Cut Pro, you know how painful it is. So I made my own effect - and I'm giving it away for free.
@@ -26,13 +26,13 @@ If you ever tried to make a rounded rectangle mask in Final Cut Pro, you know ho
 
 ## Get the effect
 
-<form class="kit-form" action="https://app.kit.com/forms/10049483/subscriptions" method="post">
+<form class="kit-form" action="https://app.kit.com/forms/10049483/subscriptions" method="post" data-redirect="/downloads/rounded-rectangle-mask/">
   <p class="kit-form-title">Rounded Rectangle Mask for Final Cut Pro - free</p>
   <div class="kit-form-row">
     <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required />
     <button type="submit" data-umami-event="fcp-mask-signup">Send me the effect</button>
   </div>
-  <p class="kit-form-note">You'll get a confirmation email with the download link. I'll also let you know when I release new Final Cut Pro tools - unsubscribe anytime.</p>
+  <p class="kit-form-note">In exchange for the free effect, you'll join my email list - I'll let you know when I release new Final Cut Pro tools. Unsubscribe anytime. <a href="/privacy/">Privacy policy</a>.</p>
   <p class="kit-form-status" role="status" aria-live="polite"></p>
 </form>
 
