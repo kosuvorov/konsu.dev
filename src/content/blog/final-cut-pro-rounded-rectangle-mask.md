@@ -13,7 +13,7 @@ faq:
   - q: "Do I need Motion to use this effect?"
     a: "No. The effect works in Final Cut Pro on its own. You only need Motion if you want to open it and change how it works."
   - q: "Is the effect really free?"
-    a: "Yes. Enter your email and you go straight to the download. In exchange, you join my email list - I'll let you know when I release new Final Cut Pro tools, and you can unsubscribe anytime."
+    a: "Yes. Enter your email and you go straight to the download. You also join my email list - no spam, I'll only email you when I release a new effect or something useful for Final Cut Pro. Unsubscribe anytime."
 ---
 
 If you ever tried to make a rounded rectangle mask in Final Cut Pro, you know how painful it is. So I made my own effect - and I'm giving it away for free.
@@ -30,9 +30,9 @@ If you ever tried to make a rounded rectangle mask in Final Cut Pro, you know ho
   <p class="kit-form-title">Rounded Rectangle Mask for Final Cut Pro - free</p>
   <div class="kit-form-row">
     <input type="email" name="email_address" placeholder="you@email.com" aria-label="Email address" autocomplete="email" required />
-    <button type="submit" data-umami-event="fcp-mask-signup">Send me the effect</button>
+    <button type="submit" data-umami-event="fcp-mask-signup">Download the effect</button>
   </div>
-  <p class="kit-form-note">In exchange for the free effect, you'll join my email list - I'll let you know when I release new Final Cut Pro tools. Unsubscribe anytime. <a href="/privacy/">Privacy policy</a>.</p>
+  <p class="kit-form-note">By entering your email, you'll join my email list. No spam - I'll only email you when I release a new effect or something useful for Final Cut Pro. Unsubscribe anytime. <a href="/privacy/">Privacy policy</a>.</p>
   <p class="kit-form-status" role="status" aria-live="polite"></p>
 </form>
 
