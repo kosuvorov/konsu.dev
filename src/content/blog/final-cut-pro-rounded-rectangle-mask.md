@@ -20,8 +20,6 @@ If you ever tried to make a rounded rectangle mask in Final Cut Pro, you know ho
 
 <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/Bz1qVZAPULs" title="The Final Cut Pro rounded mask you've been waiting for (free effect)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
 
-![A video clip with clean rounded corners made with the Rounded Rectangle Mask effect in Final Cut Pro](/blog/rounded-rectangle-mask.png)
-
 ## Get the effect
 
 <form class="kit-form" action="https://app.kit.com/forms/10049483/subscriptions" method="post" data-redirect="/downloads/rounded-rectangle-mask/">
